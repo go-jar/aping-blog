@@ -1,11 +1,17 @@
 # 1 启动
-## 1.1 后端 
+## 1.1 后端
+1. 安装 go、mysql 和 redis。
+2. 修改 aping-blog/blog-back/conf/server/server_conf.json 中的 mysql 和 redis 用户名和密码，注意密码为加密后的，加密方式见 aping-blog/blog-back/src/utils/cipher.go
+3. 执行如下命令：
 ```
-$ cd aping-blog/blog-back
+$ cd aping-blog/blog-back/src
 $ ./run.sh
 ```
 
 ## 1.2 前端
+1. 安装 nodejs 和 yarn。
+2. 修改 aping-blog/blog-front/src/router/server.js 中的域名。
+3. 执行如下命令：
 ```
 $ cd aping-blog/blog-front
 $ yarn install
@@ -14,10 +20,10 @@ $ yarn start
 # 2 HTTPS
 ## 2.1 SSL 证书
 ```
-# 安装Let'sEncrypt的certbot工具
+# 安装 Let'sEncrypt 的 certbot 工具
 $ sudo yum install certbot
 
-# 停止Nginx服务
+# 停止 Nginx 服务
 $ sudo killall nginx
 
 # 申请证书

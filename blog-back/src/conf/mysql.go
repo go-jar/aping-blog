@@ -1,7 +1,6 @@
 package conf
 
 import (
-	"fmt"
 	"time"
 
 	"blog/utils"
@@ -34,7 +33,6 @@ var MysqlConf struct {
 func initMysqlConf() {
 	MysqlConf.Host = serverConf.Mysql.Host
 	MysqlConf.User = serverConf.Mysql.User
-	fmt.Println("initMysqlConf ", utils.DecryptString(serverConf.Mysql.Pass))
 	MysqlConf.Pass = utils.DecryptString(serverConf.Mysql.Pass)
 	MysqlConf.Port = serverConf.Mysql.Port
 	MysqlConf.Name = serverConf.Mysql.Name

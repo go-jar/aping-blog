@@ -1,7 +1,6 @@
 package conf
 
 import (
-	"fmt"
 	"time"
 
 	"blog/utils"
@@ -35,7 +34,6 @@ var RedisConfList []*RedisConf
 
 func initRedisConf() {
 	for _, item := range serverConf.Redis {
-		fmt.Println("=======initRedisConf ", item.Pass)
 		RedisConfList = append(RedisConfList,
 			&RedisConf{
 				Host:                  item.Host,
