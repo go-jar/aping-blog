@@ -1,0 +1,47 @@
+{
+  "prj_name": "blog",
+  "is_dev": true,
+  "idc": "",
+
+  "log": {
+    "level": 5,
+    "async_queue_size": 1000000,
+    "buf_size": 4096
+  },
+
+  "pprof": {
+    "online_enable_host": "127.0.0.1",
+    "port": "6060"
+  },
+
+  "api_http": {
+    "gohttp_host": "127.0.0.1",
+    "gohttp_port": "9000"
+  },
+
+  "redis": [
+    {
+      "host": "127.0.0.1",
+      "pass": "",
+      "port": "6379",
+      "log_level": 7,
+      "connect_timeout_seconds": 3,
+      "rw_timeout_seconds": 3,
+      "pool_size": 256,
+      "pool_keepalive_interval_seconds": 10,
+      "pool_client_max_idle_seconds": 30
+    }
+  ],
+
+  "mysql": {
+    "host": "127.0.0.1",
+    "user": "",
+    "pass": "",
+    "port": "3306",
+    "name": "blog",
+    "log_level": 7,
+    "rw_timeout_seconds": 3,
+    "pool_size": 256,
+    "pool_client_max_idle_seconds": 10
+  }
+}

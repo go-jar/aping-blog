@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f81468d7-3b02-40b6-a6e7-e0e93b4c2381" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../../code/wsgi/core/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../code/wsgi/core/servers/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../code/wsgi/core/servers/server.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../code/wsgi/wsgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../code/wsgi/wsgi/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/conf/server/server_conf.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/conf/common.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/conf/http.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/conf/init.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/conf/log.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/conf/mysql.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/conf/pprof.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/conf/redis.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/conf/server.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/conf/uniform.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controller/api/base.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controller/api/login/base.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controller/api/login/login.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controller/base.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/entity/user.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/errno/code.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/errno/errno.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resource/log/format_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resource/log/init.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resource/mysql.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resource/redis.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/svc/base.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/svc/user/user.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/svc/user/user_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/api.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/api_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/jwt.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/jwt_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../tdw-test/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/lighthouse_dataops/src/conf/tdbank.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/lighthouse_dataops/src/conf/tdbus.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/lighthouse_dataops/src/svc/tdbank/tdbank.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/lighthouse_dataops/src/svc/tdbank/tdbank_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/consumer/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/consumer/consumer.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/consumer/dispatcher.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/consumer/task.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/consumer/task_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/consumer/worker.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/crypto/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/crypto/aes.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/crypto/md5.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/crypto/md5_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/crypto/padding.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/crypto/sha1.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/crypto/sha1_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/gocolor/color.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/gocolor/color_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/goerror/error.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/goerror/error_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/gohttp/apisign/api_sign.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/gohttp/apisign/api_sign_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/gohttp/httpclient/client.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/gohttp/httpclient/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/gohttp/idgen/trace.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/gohttp/idgen/trace_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/gohttp/query/base_value.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/gohttp/query/int64_value.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/gohttp/query/int_value.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/gohttp/query/query.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/gohttp/query/query_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/gohttp/query/string_value.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/golog/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/golog/console_writer.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/golog/file_info_format.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/jwt/jwt.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/jwt/jwt_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/levelcache/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/levelcache/levelcache.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/levelcache/levelcache_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/levelcache/value.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/misc/misc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/misc/misc_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mongo/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mongo/client.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mongo/client_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mongo/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mongo/dao.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mongo/dao_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mongo/pool.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mongo/pool_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mongo/query.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mongo/test_var.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mysql/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mysql/client_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mysql/dao.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mysql/dao_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mysql/id_gen.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mysql/id_gen_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mysql/pool.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mysql/pool_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mysql/query_builder.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mysql/query_builder_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mysql/reflect_utils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mysql/simple_orm.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mysql/simple_orm_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/mysql/test_var.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/operator/operator.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/pidfile/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/pidfile/file.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/pidfile/pid.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/pidfile/pid_file.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/pidfile/pid_file_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/pool/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/pool/pool.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/redis/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/redis/client.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/redis/client_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/redis/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/redis/pool_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/redis/reflect_utils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/redis/reply.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/redis/simple_orm.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/redis/simple_orm_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/redis/test_var.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/sqlredis/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/sqlredis/reflect_utils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/sqlredis/sql_redis.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/go-jar/sqlredis/sql_redis_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../job/lighthouse/tools/goinbox/gobox-demo/src/svc/mongodemo/errno.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../code/log/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../code/log/__init__.py" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="tsconfig.json" />
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="/usr/local/go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="ProjectId" id="1lah5YK4tGMfOKrqrkwZ93Acld1" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="go.vgo" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/svc/user" />
+      <recent name="$PROJECT_DIR$/src/resource/mysql" />
+      <recent name="$PROJECT_DIR$/src/resource/log" />
+      <recent name="$PROJECT_DIR$/src/errno" />
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="go build mysql.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="blog-back" />
+      <working_directory value="$PROJECT_DIR$/src" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/src/conf/mysql.go" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build mysql.go" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+    <proxy>direct</proxy>
+  </component>
+</project>
