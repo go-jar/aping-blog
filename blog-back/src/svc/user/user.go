@@ -66,7 +66,7 @@ func (s *Svc) GetByUsername(username string) (*entity.UserEntity, error) {
 }
 
 func (s *Svc) VerifyPassword(passwordFromRequest, passwordFromDb string) bool {
-	if crypto.Sha1String([]byte(passwordFromRequest)) != passwordFromDb {
+	if crypto.Md5String([]byte(passwordFromRequest)) != passwordFromDb {
 		return false
 	}
 	return true

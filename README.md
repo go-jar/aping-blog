@@ -10,7 +10,7 @@ $ ./run.sh
 
 ## 1.2 前端
 1. 安装 nodejs 和 yarn。
-2. 修改 aping-blog/blog-front/src/router/server.js 中的域名。
+2. 修改 aping-blog/blog-front/config/dev.env.js 和 prod.env.js 中的域名。
 3. 执行如下命令：
 ```
 $ cd aping-blog/blog-front

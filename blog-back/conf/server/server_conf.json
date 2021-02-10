@@ -22,7 +22,7 @@
   "redis": [
     {
       "host": "127.0.0.1",
-      "pass": "",
+      "pass": "vxanbQy7pzvjS5w8EI5kXg==",
       "port": "6379",
       "log_level": 7,
       "connect_timeout_seconds": 3,
@@ -35,8 +35,8 @@
 
   "mysql": {
     "host": "127.0.0.1",
-    "user": "",
-    "pass": "",
+    "user": "root",
+    "pass": "vxanbQy7pzvjS5w8EI5kXg==",
     "port": "3306",
     "name": "blog",
     "log_level": 7,

@@ -20,20 +20,8 @@
 </template>
 
 <script>
-import {
-	ArticleClassData,
-	LoginOut,
-	changeTheme,
-	AboutMeData
-} from '../utils/server.js'
-import {
-	Typeit
-} from '../utils/plug.js'
 export default {
-	data() { //选项 / 数据
-	},
 	watch: {
-
 	},
 	methods: { // 事件处理器
 	},

@@ -10,9 +10,12 @@
 						<el-menu-item index="/Home"><i class="fa fa-wa fa-home"></i> 首页</el-menu-item>
 						<el-submenu index="/BlogList">
 							<template slot="title"><i class="fa fa-wa fa-archive"></i> 分类</template>
-							<el-menu-item v-for="(item,index) in classListObj" :key="'class1'+index" :index="'/BlogList?classId='+item.class_id">{{item.cate_name}}</el-menu-item>
+							<el-menu-item v-for="(item,index) in articleClassListObj" :key="'class1'+index" :index="'/BlogList?classId='+item.class_id">{{item.cate_name}}</el-menu-item>
 						</el-submenu>
 						<el-menu-item index="/About"><i class="fa fa-wa fa-vcard"></i> 关于</el-menu-item>
+						<div class="createArticle">
+							<el-menu-item v-show="adminLogin" index="/CreateArticle"><i class="fa fa-fw fa-user-circle userImg"></i> 创作</el-menu-item>
+						</div>
 						<div index="" class="pcsearchbox">
 							<i class="el-icon-search pcsearchicon"></i>
 							<div class="pcsearchinput" :class="input?'hasSearched':''">
@@ -31,7 +34,7 @@
 								<el-menu-item index="/Home"><i class="fa fa-wa fa-home"></i> 首页</el-menu-item>
 								<el-submenu index="/BlogList">
 									<template slot="title"><i class="fa fa-wa fa-archive"></i> 分类</template>
-									<el-menu-item v-for="(item,index) in classListObj" :key="'class1'+index" :index="'/BlogList?classId='+item.class_id">{{item.cate_name}}</el-menu-item>
+									<el-menu-item v-for="(item,index) in articleClassListObj" :key="'class1'+index" :index="'/BlogList?classId='+item.class_id">{{item.cate_name}}</el-menu-item>
 								</el-submenu>
 								<el-menu-item index="/About"><i class="fa fa-wa fa-vcard"></i> 关于</el-menu-item>
 							</el-menu>
@@ -49,28 +52,28 @@
 </template>
 
 <script>
-import {
-	ArticleClassData,
-	LoginOut,
-	changeTheme,
-	AboutMeData
-} from '../utils/server.js'
+// import {
+// 	ArticleClassData,
+// } from '../router/server.js'
 import {
 	Typeit
 } from '../utils/plug.js'
+import {
+	Const,
+} from '../const/common.js'
+import {
+	LoginKey,
+} from '../const/login.js'
+
 export default {
 	data() { //选项 / 数据
 		return {
-			userInfo: '', // 用户信息
-			haslogin: false, // 是否已登录
-			classListObj: '', // 技术分类
+			adminLogin: false, // 是否已登录
+			articleClassListObj: '', // 技术分类
 			activeIndex: '/', // 当前选择的路由模块
 			state: '', // icon点击状态
 			pMenu: true, // 手机端菜单打开
-			// path:'',// 当前打开页面的路径
 			input: '', // input输入内容
-			headTou: '', // 头像
-			projectList: '' //项目列表
 		}
 	},
 	watch: {
@@ -92,77 +95,28 @@ export default {
 		},
 		searchEnterFun: function(e) { // input 输入 enter
 			 var keyCode = window.event? e.keyCode:e.which;
-			 // console.log('CLICK', this.input, keyCode)
-             // console.log('回车搜索',keyCode,e);
              if(this.input){
 				 this.$store.state.keywords = this.input;
                  this.$router.push({path:'/BlogList?keywords='+this.input});
              }
 		},
-		handleSelect(key, keyPath) { // pc菜单选择
+		handleSelect(key, keyPath) { // pc 菜单选择
 			// console.log(key, keyPath);
-		},
-		logoinFun: function(msg) { // 用户登录和注册跳转
-			// console.log(msg);
-			localStorage.setItem('logUrl', this.$route.fullPath);
-			// console.log(666,this.$router.currentRoute.fullPath);
-			if (msg == 0) {
-				this.$router.push({
-					path: '/Login?login=0'
-				});
-			} else {
-				this.$router.push({
-					path: '/Login?login=1'
-				});
-			}
-		},
-		// 用户退出登录
-		userlogout: function() {
-			var that = this;
-			this.$confirm('是否确认退出?', '退出提示', {
-				confirmButtonText: '确定',
-				cancelButtonText: '取消',
-				type: 'warning'
-			}).then(() => {
-				// console.log(that.$route.path);
-				LoginOut(localStorage.getItem('accessToken'), function(result) {
-					//    console.log(result);
-					if (localStorage.getItem('userInfo')) {
-						localStorage.removeItem('userInfo');
-						that.haslogin = false;
-						//    that.$router.replace({path:that.$route.fullPath});
-						window.location.reload();
-						that.$message({
-							type: 'success',
-							message: '退出成功!'
-						});
-					}
-					if (that.$route.path == '/UserInfo') {
-						that.$router.push({
-							path: '/'
-						});
-					}
-				})
-			}).catch(() => {
-				//
-			});
-
 		},
 		routeChange: function() {
 			var that = this;
 			that.pMenu = true
 			this.activeIndex = this.$route.path == '/' ? '/Home' : this.$route.path;
-			if (localStorage.getItem('userInfo')) { // 存储用户信息
-				that.haslogin = true;
-				that.userInfo = JSON.parse(localStorage.getItem('userInfo'));
-				// console.log(that.userInfo);
+			if (localStorage.getItem(LoginKey.ACCESS_TOKEN)) { // 存储用户信息
+				that.adminLogin = true;
+				// console.log("that.adminLogin: ", that.adminLogin);
 			} else {
-				that.haslogin = false;
+				that.adminLogin = false;
 			}
-			ArticleClassData(function(msg) { // 文章分类
-				// console.log(msg);
-				that.classListObj = msg;
-			})
+			// ArticleClassData(function(msg) { // 文章分类
+			// 	// console.log(msg);
+			// 	that.articleClassListObj = msg;
+			// })
 			if ((this.$route.name == "BlogList" || this.$route.name == "Home") && this.$store.state.keywords) {
 				this.input = this.$store.state.keywords;
 			} else {
@@ -181,39 +135,23 @@ export default {
 	created() { // 生命周期函数
 		// 判断当前页面是否被隐藏
 		var that = this;
-		document.title = "阿萍的博客"
+		document.title = Const.TITLE
 		var hiddenProperty = 'hidden' in document ? 'hidden' :
 			'webkitHidden' in document ? 'webkitHidden' :
 			'mozHidden' in document ? 'mozHidden' :
 			null;
 		var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
 		var onVisibilityChange = function() {
-			if (document[hiddenProperty]) { // 被隐藏
-			} else {
-				if (that.$route.path != '/BlogDetail') {
-					if (localStorage.getItem('userInfo')) {
-						that.haslogin = true;
-					} else {
-						that.haslogin = false;
-					}
+			if (!document[hiddenProperty]) { // 被打开
+				if (localStorage.getItem(LoginKey.ADMAIN_NAME)) {
+					that.adminLogin = true;
+				} else {
+					that.adminLogin = false;
 				}
 			}
 		}
 		document.addEventListener(visibilityChangeEvent, onVisibilityChange);
-		// console.log();
 		this.routeChange();
-		// 设置主题
-		changeTheme(function(msg) {
-			// console.log(msg);
-			that.$store.state.themeObj = msg;
-
-			// console.log('主题',that.$store.state.themeObj );
-		});
-		//关于我的信息
-		AboutMeData(function(msg) {
-			// console.log('关于我',msg);
-			that.$store.state.aboutmeObj = msg
-		})
 	},
 	mounted() { // 页面元素加载完成
 		var that = this;
@@ -365,7 +303,7 @@ export default {
 	padding-right: 10px;
 }
 
-.headBox .userInfo {
+.headBox .createArticle {
 	height: 100%;
 	line-height: 38px;
 	position: absolute;
@@ -374,13 +312,13 @@ export default {
 	color: #fff;
 }
 
-.headBox .userInfo a {
+.headBox .createArticle a {
 	color: #fff;
 	font-size: 13px;
 	transition: all 0.2s ease-out;
 }
 
-.headBox .userInfo a:hover {
+.headBox .createArticle a:hover {
 	color: #48456C;
 }
 

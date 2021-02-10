@@ -23,43 +23,26 @@
 </template>
 
 <script>
-import {Admin} from '../router/server.js'
-import {Code} from '../utils/error.js'
+import {AdminLogin} from '../api/user.js'
+import {Code} from '../const/code.js'
+import {LoginKey} from '../const/login.js'
+import {GetToken, SetToken} from '../utils/auth.js'
 
 export default {
     data() { // 选项 / 数据
         return {
             username: '', // 用户名
             password: '', // 密码
-            isLogin: 0, // 是否已经登录
+            isLogin: 0,   // 是否已经登录
             usernameErr: false, // 用户名错误
             passwordErr: false, // 密码错误
             loginErr: false, // 登录错误
             loginTitle: '用户名或密码错误',
-            fullscreenLoading: false, // 全屏 loading
-            step: 1, // 进度
         }
     },
     methods: { // 事件处理器
-        routeChange: function () {
-            var that = this;
-            that.isLogin = that.$route.query.login == undefined ? 1 : parseInt(that.$route.query.login); // 获取传参的login
-            that.urlstate = that.$route.query.urlstate == undefined ? 0 : that.$route.query.urlstate; // 获取传参的usrlstate状态码
-            // console.log(that.login,that.urlstate);
-            if (that.urlstate == 0) {
-                that.err2005 = false;
-                that.step = 1;
-            } else if (that.urlstate == 'urlInvalid') {
-                that.err2005 = true;
-                that.step = 2
-            } else if (that.urlstate == 'urlErr') {
-                that.err2005 = true;
-                that.step = 1;
-            }
-        },
         loginEnterFun: function (e) {
             var keyCode = window.event ? e.keyCode : e.which;
-            // console.log('回车登录',keyCode,e);
             if (keyCode == 13) {
                 this.login();
             }
@@ -69,32 +52,16 @@ export default {
             var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
             var preg = /^([a-zA-Z0-9?]){6,12}/;
             
-            if(that.username) {
-                that.usernameErr = false;
-            } else {
-                that.usernameErr = true;
-            }
-            if (that.password && preg.test(that.password)) {
-                that.passwordErr = false;
-            } else {
-                that.passwordErr = true;
-            }
-            if (!that.usernameErr && !that.passwordErr) {
-                Admin(that.username, that.password, function(msg) {
-                    if (msg.data.code == Code.SUCCESS) { // 登录成功
-                        localStorage.setItem('adminName', JSON.stringify(msg.data.data.user.username));
-                        localStorage.setItem('accessToken', msg.data.data.token);
-                        if (localStorage.getItem('logUrl')) {
-                            that.$router.push({
-                                path: localStorage.getItem('logUrl')
-                            });
-                        } else {
-                            localStorage.setItem('logUrl', this.$route.fullPath);
-                            that.$router.push({
-                                path: '/'
-                            });
-                        }
+            that.usernameErr = that.username? false: true;
+            that.passwordErr = that.password && preg.test(that.password)? false: true;
 
+            if (!that.usernameErr && !that.passwordErr) {
+                AdminLogin(that.username, that.password).then(response => {
+                    if (response.code == Code.SUCCESS) { // 登录成功
+                        SetToken(response.data.token);
+                        that.$router.push({
+                            path: '/'
+                        });
                     } else {
                         that.loginErr = true;
                         that.loginTitle = '登录失败';
@@ -106,12 +73,8 @@ export default {
     components: { // 定义组件
     },
     watch: {
-        // 如果路由有变化，会再次执行该方法
-        '$route': 'routeChange'
     },
     created() { // 生命周期函数
-        var that = this;
-        that.routeChange();
     }
 }
 </script>

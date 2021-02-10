@@ -1,25 +1,10 @@
 import Vue from 'vue'
 import axios from 'axios'
-import qs from 'qs';
 
 // 全局设置
 axios.defaults.baseURL = 'https://aping-dev.com/back';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 let blogUrl = "https://aping-dev.com/back"
-
-// 管理
-const Admin =  (username, password, callback) =>{
-    axios.post('/user/login', qs.stringify({
-        "username": username, 
-        "password": password
-    }))
-    .then(response => {
-        callback && callback(response)
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
-}
 
 // 文章分类查询
 const ArticleClassData = (callback) => {
@@ -213,20 +198,19 @@ const changeTheme = (callback) => {
 }
 
 export {
-        Admin, // 管理
-        ArticleClassData, // 分类
-        ShowArticleAll, // 查询文章列表
-        getArticleInfo, // 文章详情
-        ShowBrowseCount, // 流量量做多的文章
-        ShowArtCommentCount, // 评论最多的文章
-        ArticleComment, // 文章评论列表
-        OtherComment, // 其他评论列表
-        setArticleComment, // 设置文章评论
-        setOuthComment, // 设置其他评论
-        showLikeData, // do you like me
-        GetLike, // 设置 do you like me
-        AdmireData, // 赞赏数据
-        getLikeCollectList, // 用户收藏喜欢列表
-        initDate, // 设置时间
-        changeTheme, // 获取主题信息
-    }
+    ArticleClassData, // 分类
+    ShowArticleAll, // 查询文章列表
+    getArticleInfo, // 文章详情
+    ShowBrowseCount, // 流量量做多的文章
+    ShowArtCommentCount, // 评论最多的文章
+    ArticleComment, // 文章评论列表
+    OtherComment, // 其他评论列表
+    setArticleComment, // 设置文章评论
+    setOuthComment, // 设置其他评论
+    showLikeData, // do you like me
+    GetLike, // 设置 do you like me
+    AdmireData, // 赞赏数据
+    getLikeCollectList, // 用户收藏喜欢列表
+    initDate, // 设置时间
+    changeTheme, // 获取主题信息
+}

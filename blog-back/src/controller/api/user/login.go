@@ -32,7 +32,7 @@ func (uc *UserController) LoginAction(context *UserContext) {
 	token, err := utils.GenerateToken(userFromDb.Id, userFromDb.Username, conf.LoginSecretKey, conf.LoginExpireSeconds)
 	if err != nil {
 		context.ApiData.Err = e
-		return
+		return 
 	}
 
 	context.ApiData.Data = map[string]interface{}{

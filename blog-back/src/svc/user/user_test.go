@@ -1,11 +1,10 @@
 package user
 
 import (
-	"blog/conf"
 	"testing"
 
+	"blog/conf"
 	"blog/resource"
-
 )
 
 func TestSvc(t *testing.T) {
