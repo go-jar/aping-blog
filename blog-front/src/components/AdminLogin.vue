@@ -23,10 +23,10 @@
 </template>
 
 <script>
-import {AdminLogin} from '../api/user.js'
-import {Code} from '../const/code.js'
-import {LoginKey} from '../const/login.js'
-import {GetToken, SetToken} from '../utils/auth.js'
+import {adminLogin} from '@/api/user.js'
+import {Code} from '@/const/code.js'
+import {LoginKey} from '@/const/login.js'
+import {GetToken, SetToken} from '@/utils/auth.js'
 
 export default {
     data() { // 选项 / 数据
@@ -56,9 +56,9 @@ export default {
             that.passwordErr = that.password && preg.test(that.password)? false: true;
 
             if (!that.usernameErr && !that.passwordErr) {
-                AdminLogin(that.username, that.password).then(response => {
-                    if (response.code == Code.SUCCESS) { // 登录成功
-                        SetToken(response.data.token);
+                adminLogin(that.username, that.password).then(response => {
+                    if (response.Code == Code.SUCCESS) { // 登录成功
+                        SetToken(response.Data.Token);
                         that.$router.push({
                             path: '/'
                         });

@@ -3,7 +3,7 @@
 <div>
     <wbc-nav></wbc-nav>
     <div class="container">
-        <wbc-login></wbc-login>
+        <wbc-article></wbc-article>
     </div>
     <wbc-footer></wbc-footer>   
 </div>
@@ -12,7 +12,7 @@
 <script>
     import Header from '@/components/Header'
     import Footer from '@/components/Footer'
-    import AdminLogin from '@/components/AdminLogin'
+    import CreateArticle from '@/components/CreateArticle'
 
     export default {
         data() { // 选项 / 数据
@@ -25,7 +25,7 @@
         },
         components: { // 定义组件
             'wbc-nav': Header,
-            'wbc-login': AdminLogin,
+            'wbc-article': CreateArticle,
             'wbc-footer': Footer
         },
         created() { // 生命周期函数

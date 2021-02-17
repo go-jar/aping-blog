@@ -1,6 +1,7 @@
 package main
 
 import (
+	"blog/controller/api/category"
 	"flag"
 	"fmt"
 	"net/http"
@@ -67,6 +68,7 @@ func main() {
 	r := router.NewSimpleRouter(log.TestLogger)
 	r.RegisterRoutes(
 		new(user.UserController),
+		new(category.CategoryController),
 	)
 
 	sys := system.NewSystem(r)

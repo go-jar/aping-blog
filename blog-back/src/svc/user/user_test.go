@@ -1,6 +1,10 @@
 package user
 
 import (
+	"blog/errno"
+	"blog/resource/log"
+	"fmt"
+	"os"
 	"testing"
 
 	"blog/conf"
@@ -23,7 +27,19 @@ func TestSvc(t *testing.T) {
 }
 
 func prepare() {
-	_ = conf.Init("/data/blog-back/")
+	if err := conf.Init("/data/blog-back/"); err != nil {
+		fmt.Println(err)
+	}
+
+	err := log.InitLog("api")
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(errno.ESysInitLogFail)
+	}
+	defer func() {
+		log.FreeLog()
+	}()
+
 	resource.InitMysql()
 	resource.InitRedis()
 }

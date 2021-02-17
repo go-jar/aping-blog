@@ -4,11 +4,15 @@ Vue.use(Router)
 
 export const constantRouterMap = [
 	{ path: '/', component: () => import('@/pages/Home') },
-	{ path: '/Home', component: () => import('@/pages/Home') },
-	{ path: '/AdminLogin', component: () => import('@/pages/AdminLogin') },
-	{ path: '/About', component: () => import('@/pages/About') },
-  ]
-  
+	{ path: '/home', component: () => import('@/pages/Home') },
+	{ path: '/admin-login', component: () => import('@/pages/AdminLogin') },
+	{ path: '/about', component: () => import('@/pages/About') },
+	{ path: '/create-article', component: () => import('@/pages/CreateArticle') },
+	{ path: '/manage-cagegory', component: () => import('@/pages/ManageCategory') },
+	{ path: '/manage-tag', component: () => import('@/pages/CreateArticle') },
+	{ path: '/list-categories', component: () => import('@/pages/ListCategories') },
+]
+
 const router = new Router({
 	scrollBehavior(to, from, savePosition) { // 在点击浏览器的“前进/后退”，或者切换导航的时候触发。
 		if (savePosition) {

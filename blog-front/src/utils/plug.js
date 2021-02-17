@@ -413,24 +413,14 @@ const Typeit = (emId) =>{
                 });
 
         theater
-                .write("Luke:Hello, world!", 500)
+                .write("Luke:Hello, world!", 100)
                 .write({ name: "call", args: [kill, true] })
                 .write(function () { theater.play(true); });
         function kill () {
-//             var self    = this,
-//                     delay   = 500,
-//                     i       = 0,
-//                     timeout = setTimeout(function blink () {
-// //                        toggleClass("blood");
-// //                        if (++i < 6) timeout = setTimeout(blink, delay);
-// //                        else self.next();
-//                         clearTimeout(timeout);
-//                     }, delay);
-
             return self;
         }
 }
 
 export {
-    Typeit//打字效果
+    Typeit // 打字效果
 }

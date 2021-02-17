@@ -1,10 +1,10 @@
 package entity
 
 type UserEntity struct {
-	Id          int64    `mysql:"id" json:"id" redis:"id"`
-	Username    string `mysql:"username" json:"username" redis:"username"`
-	Password    string `mysql:"password" json:"password" redis:"password"`
-	Role        string `mysql:"role" json:"role" redis:"role"`
-	CreatedTime string `mysql:"created_time" json:"created_time" redis:"created_time"`
-	UpdatedTime string `mysql:"updated_time" json:"updated_time" redis:"updated_time"`
+	Id          int64  `mysql:"id" redis:"id" json:"Id"`
+	Username    string `mysql:"username" redis:"username" json:"Username"`
+	Password    string `mysql:"password" redis:"password" json:"Password"`
+	Role        string `mysql:"role" redis:"role" json:"Role"`
+	CreatedTime string `mysql:"created_time" redis:"created_time" json:"CreatedTime"`
+	UpdatedTime string `mysql:"updated_time" redis:"updated_time" json:"UpdatedTime" `
 }

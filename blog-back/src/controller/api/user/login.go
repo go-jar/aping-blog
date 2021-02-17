@@ -11,7 +11,7 @@ import (
 )
 
 func (uc *UserController) LoginAction(context *UserContext) {
-	userFromRequest, e := uc.parseAddActionParams(context)
+	userFromRequest, e := uc.parseLoginActionParams(context)
 	if e != nil {
 		context.ApiData.Err = e
 		return
@@ -32,24 +32,25 @@ func (uc *UserController) LoginAction(context *UserContext) {
 	token, err := utils.GenerateToken(userFromDb.Id, userFromDb.Username, conf.LoginSecretKey, conf.LoginExpireSeconds)
 	if err != nil {
 		context.ApiData.Err = e
-		return 
+		return
 	}
 
 	context.ApiData.Data = map[string]interface{}{
-		"user": userFromDb,
-		"token": token,
+		"User":  userFromDb,
+		"Token": token,
+		"RequestId": context.TraceId,
 	}
 }
 
-func (uc *UserController) parseAddActionParams(context *UserContext) (*entity.UserEntity, *goerror.Error) {
+func (uc *UserController) parseLoginActionParams(context *UserContext) (*entity.UserEntity, *goerror.Error) {
 	userEntity := new(entity.UserEntity)
 
 	qs := query.NewQuerySet()
-	qs.StringVar(&userEntity.Username, "username", true, errno.ECommonInvalidArg, "invalid username", query.CheckStringNotEmpty)
-	qs.StringVar(&userEntity.Password, "password", true, errno.ECommonInvalidArg, "invalid password", query.CheckStringNotEmpty)
+	qs.StringVar(&userEntity.Username, "Username", true, errno.ECommonInvalidArg, "invalid Username", query.CheckStringNotEmpty)
+	qs.StringVar(&userEntity.Password, "Password", true, errno.ECommonInvalidArg, "invalid Password", query.CheckStringNotEmpty)
 
 	if e := qs.Parse(context.QueryValues); e != nil {
-		context.ErrorLog([]byte("UserController.parseAddActionParams"), []byte(e.Error()))
+		context.ErrorLog([]byte("UserController.parseLoginActionParams"), []byte(e.Error()))
 		return nil, e
 	}
 

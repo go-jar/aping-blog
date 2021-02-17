@@ -10,9 +10,9 @@
 </template>
 
 <script>
-    import Header from '../components/Header.vue'
-    import Footer from '../components/Footer.vue'
-    import BlogList from '..//components/BlogList'
+    import Header from '@/components/Header'
+    import Footer from '@/components/Footer'
+    import BlogList from '@/components/BlogList'
 
     export default {
         name: 'BlogList',

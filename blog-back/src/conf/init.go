@@ -2,6 +2,7 @@ package conf
 
 import (
 	"errors"
+
 	"github.com/goinbox/gomisc"
 )
 
@@ -13,10 +14,9 @@ func Init(prjHome string) error {
 	}
 
 	PrjHome = prjHome
-
 	err := initServerConfJson()
 	if err != nil {
-		return errors.New("init serverConfJson error: "+err.Error())
+		return errors.New("init serverConfJson error: " + err.Error())
 	}
 
 	initCommonConf()

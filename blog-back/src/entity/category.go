@@ -1,0 +1,15 @@
+package entity
+
+import (
+	"reflect"
+	"time"
+)
+
+type CategoryEntity struct {
+	Id           int64  `mysql:"id" redis:"id" json:"Id"`
+	CategoryName string `mysql:"category_name" redis:"category_name" json:"CategoryName"`
+	CreatedTime  time.Time `mysql:"created_time" redis:"created_time" json:"CreatedTime"`
+	UpdatedTime  time.Time `mysql:"updated_time" redis:"updated_time" json:"UpdatedTime"`
+}
+
+var CategoryEntityType = reflect.TypeOf(CategoryEntity{})

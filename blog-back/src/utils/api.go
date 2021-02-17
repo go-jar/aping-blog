@@ -23,11 +23,11 @@ const (
 )
 
 type ApiData struct {
-	Code    string `json:"code"`
-	Msg     string `json:"msg"`
-	Version string `json:"version"`
+	Code    string `json:"Code"`
+	Msg     string `json:"Msg"`
+	Version string `json:"Version"`
 
-	Data interface{} `json:"data"`
+	Data interface{} `json:"Data"`
 }
 
 func ApiJson(version string, data interface{}, e *goerror.Error) []byte {

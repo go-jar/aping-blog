@@ -7,14 +7,17 @@
 				<!-- pc端导航 -->
 				<div class="headBox">
 					<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" :router="true">
-						<el-menu-item index="/Home"><i class="fa fa-wa fa-home"></i> 首页</el-menu-item>
-						<el-submenu index="/BlogList">
-							<template slot="title"><i class="fa fa-wa fa-archive"></i> 分类</template>
-							<el-menu-item v-for="(item,index) in articleClassListObj" :key="'class1'+index" :index="'/BlogList?classId='+item.class_id">{{item.cate_name}}</el-menu-item>
+						<el-menu-item index="/home"><i class="fa fa-wa fa-home"></i> 首页</el-menu-item>
+						<el-menu-item index="/list-categories"><i class="fa fa-wa fa-home"></i> 类别</el-menu-item>
+						<el-menu-item index="/list-tags"><i class="fa fa-wa fa-home"></i> 标签</el-menu-item>
+						<el-menu-item index="/about"><i class="fa fa-wa fa-vcard"></i> 关于</el-menu-item>
+						<el-submenu v-show="adminLogin" index="3">
+							<template slot="title"><i class="fa fa-wa fa-archive"></i> 管理</template>
+							<el-menu-item index="/manage-cagegory">类别</el-menu-item>
+							<el-menu-item index="/manage-tag">标签</el-menu-item>
 						</el-submenu>
-						<el-menu-item index="/About"><i class="fa fa-wa fa-vcard"></i> 关于</el-menu-item>
 						<div class="createArticle">
-							<el-menu-item v-show="adminLogin" index="/CreateArticle"><i class="fa fa-fw fa-user-circle userImg"></i> 创作</el-menu-item>
+							<el-menu-item v-show="adminLogin" index="/create-article"><i class="fa fa-fw fa-user-circle userImg"></i> 创作</el-menu-item>
 						</div>
 						<div index="" class="pcsearchbox">
 							<i class="el-icon-search pcsearchicon"></i>
@@ -31,12 +34,12 @@
 						<i @click="pMenu=!pMenu" class="el-icon-menu"></i>
 						<el-collapse-transition>
 							<el-menu :default-active="activeIndex" class="mlistmenu" v-show="!pMenu" theme="dark" @open="handleOpen" @close="handleClose" :unique-opened="true" :router="true">
-								<el-menu-item index="/Home"><i class="fa fa-wa fa-home"></i> 首页</el-menu-item>
-								<el-submenu index="/BlogList">
+								<el-menu-item index="/home"><i class="fa fa-wa fa-home"></i> 首页</el-menu-item>
+								<el-submenu index="/category">
 									<template slot="title"><i class="fa fa-wa fa-archive"></i> 分类</template>
 									<el-menu-item v-for="(item,index) in articleClassListObj" :key="'class1'+index" :index="'/BlogList?classId='+item.class_id">{{item.cate_name}}</el-menu-item>
 								</el-submenu>
-								<el-menu-item index="/About"><i class="fa fa-wa fa-vcard"></i> 关于</el-menu-item>
+								<el-menu-item index="/about"><i class="fa fa-wa fa-vcard"></i> 关于</el-menu-item>
 							</el-menu>
 						</el-collapse-transition>
 						<div class="searchBox">
@@ -57,19 +60,19 @@
 // } from '../router/server.js'
 import {
 	Typeit
-} from '../utils/plug.js'
+} from '@/utils/plug'
 import {
 	Const,
-} from '../const/common.js'
+} from '@/const/common'
 import {
 	LoginKey,
-} from '../const/login.js'
+} from '@/const/login'
 
 export default {
 	data() { //选项 / 数据
 		return {
 			adminLogin: false, // 是否已登录
-			articleClassListObj: '', // 技术分类
+			articleClassListObj: '', // 文章分类
 			activeIndex: '/', // 当前选择的路由模块
 			state: '', // icon点击状态
 			pMenu: true, // 手机端菜单打开
@@ -436,5 +439,9 @@ export default {
 .hideMenu>ul li.el-menu-item:hover,
 .hideMenu>ul li.el-menu-item.is-active {
 	background: #48576a;
+}
+.el-input__inner {
+  background-color: rgba(230, 244, 249, 0.85);
+  border-radius: 1px;
 }
 </style>

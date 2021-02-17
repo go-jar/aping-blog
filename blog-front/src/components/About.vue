@@ -7,7 +7,6 @@
                     <p class="">
                         <img :src="this.$store.state.aboutmeObj.image?this.$store.state.aboutmeObj.image:'static/img/logo.png'" alt="" onerror="this.onerror=null;this.src= 'static/img/maoto.png'" class="aboutmeImg">
                     </p>
-                    <p v-html="this.$store.state.aboutmeObj.brief">{{this.$store.state.aboutmeObj.brief}}</p>
                     <div class='content'>
                         <h2>
                             欢迎来到我的博客

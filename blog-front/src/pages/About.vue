@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import Header from '../components/Header.vue'
-import Footer from '../components/Footer.vue'
-import About from '../components/About'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+import About from '@/components/About'
 
 export default {
     name: 'About',
