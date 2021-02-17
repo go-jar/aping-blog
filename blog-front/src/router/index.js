@@ -9,8 +9,9 @@ export const constantRouterMap = [
 	{ path: '/about', component: () => import('@/pages/About') },
 	{ path: '/create-article', component: () => import('@/pages/CreateArticle') },
 	{ path: '/manage-cagegory', component: () => import('@/pages/ManageCategory') },
-	{ path: '/manage-tag', component: () => import('@/pages/CreateArticle') },
+	{ path: '/manage-tag', component: () => import('@/pages/ManageTag') },
 	{ path: '/list-categories', component: () => import('@/pages/ListCategories') },
+	{ path: '/list-tags', component: () => import('@/pages/ListTags') },
 ]
 
 const router = new Router({

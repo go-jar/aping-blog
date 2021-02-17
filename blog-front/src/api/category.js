@@ -1,12 +1,13 @@
 import qs from 'qs';
 import request from '../utils/request'
 
-export function createCategory(categoryName) {
+export function createCategory(category) {
     return request({
         url: process.env.WEB_API + '/category/create',
         method: 'post',
         data: qs.stringify({
-            "CategoryName": categoryName,
+            "CategoryName": category.CategoryName,
+            "CategoryIndex": category.CategoryIndex,
         })
     })
 }
@@ -21,13 +22,14 @@ export function deleteCategory(categoryId) {
     })
 }
 
-export function updateCategory(categoryId, newCategoryName) {
+export function updateCategory(category) {
     return request({
         url: process.env.WEB_API + '/category/update',
         method: 'post',
         data: qs.stringify({
-            "Id": categoryId, 
-            "CategoryName": newCategoryName
+            "Id": category.Id, 
+            "CategoryName": category.CategoryName,
+            "CategoryIndex": category.CategoryIndex,
         })
     })
 }

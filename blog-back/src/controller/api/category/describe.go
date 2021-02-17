@@ -32,13 +32,13 @@ func (cc *CategoryController) DescribeAction(context *CategoryContext) {
 
 	context.ApiData.Data = map[string]interface{}{
 		"CategorySet": entities,
-		"Total": total,
-		"RequestId": context.TraceId,
+		"Total":       total,
+		"RequestId":   context.TraceId,
 	}
 }
 
 func (cc *CategoryController) parseDescribeActionParams(context *CategoryContext) (*mysql.QueryParams, *goerror.Error) {
-	qp := &mysql.QueryParams{OrderBy: "id desc"}
+	qp := &mysql.QueryParams{OrderBy: "category_index"}
 	var id int64
 	id = -1
 

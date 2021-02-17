@@ -4,13 +4,13 @@
     <div class="container">
         <div class="content">
             <div class="filter-container" style="margin: 3px 0 10px 6px;">
-                <el-button class="filter-item" type="primary" @click="handleCreateCategory" icon="el-icon-edit">添加</el-button>
+                <el-button class="filter-item" type="primary" @click="handleCreateTag" icon="el-icon-edit">添加</el-button>
             </div>
 
-            <!-- 列出类别 -->
+            <!-- 列出标签 -->
             <el-row>
                 <el-col
-                    v-for="item in this.categoryObjs"
+                    v-for="item in this.tagObjs"
                     :key="item.Id"
                     style="padding: 6px"
                     :xs="24"
@@ -25,11 +25,11 @@
                         style="position: relative"
                         shadow="always"
                     >
-                        <div class="categoryName">{{item.CategoryName}}</div>
+                        <div class="TagName">{{item.TagName}}</div>
                        
                         <div style="height: 25px; margin-top: 14px; margin-right: 6px">
                             <el-button-group>
-                                <el-tooltip class="item" effect="dark" content="类别" placement="bottom-start" style="margin-right: 2px">
+                                <el-tooltip class="item" effect="dark" content="标签" placement="bottom-start" style="margin-right: 2px">
                                     <el-button
                                         size="mini"
                                         icon="el-icon-copy-document"
@@ -42,7 +42,7 @@
                                         type="primary"
                                         size="mini"
                                         icon="el-icon-document-copy"
-                                        @click="handleUpdateCategory(item)"
+                                        @click="handleUpdateTag(item)"
                                     >
                                     </el-button>
                                 </el-tooltip>
@@ -52,7 +52,7 @@
                                         type="danger"
                                         size="mini"
                                         icon="el-icon-delete"
-                                        @click="handleDeleteCategory(item)"
+                                        @click="handleDeleteTag(item)"
                                     />
                                 </el-tooltip>
                             </el-button-group>
@@ -79,25 +79,25 @@
                 :before-close="closeDialog"
                 fullscreen
             >
-                <el-form :model="category" :rules="categoryRules" ref="category">
+                <el-form :model="tag" :rules="tagRules" ref="tag">
                     <el-row>
                         <el-col :span="22">
-                            <el-form-item label="类别" :label-width="formLabelWidth">
-                                <el-input v-model="category.CategoryName" auto-complete="off" @input="contentChange" ref="categoryName"></el-input>
+                            <el-form-item label="标签" :label-width="formLabelWidth">
+                                <el-input v-model="tag.TagName" auto-complete="off" @input="contentChange" ref="tagName"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row>
                         <el-col :span="22">
                             <el-form-item label="序号" :label-width="formLabelWidth">
-                                <el-input v-model="category.CategoryIndex" auto-complete="off" @input="contentChange" ref="categoryIndex"></el-input>
+                                <el-input v-model="tag.TagIndex" auto-complete="off" @input="contentChange" ref="tagIndex"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
 
                     <el-form-item style="float: right; margin-right: 66px;">
                         <el-button @click="dialogVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="submitCategory">确 定</el-button>
+                        <el-button type="primary" @click="submitTag">确 定</el-button>
                     </el-form-item>
                 </el-form>
             </el-dialog>
@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import {createCategory, deleteCategory, updateCategory, describeCategories} from "@/api/category";
+import {createTag, deleteTag, updateTag, describeTags} from "@/api/tag";
 import {Code} from '@/const/code.js'
 import {message} from '@/utils/common'
 
@@ -118,27 +118,27 @@ export default {
             dialogVisible: false,  // 控制弹出框
             isChange: false,  // 内容是否改变
             changeCount: 0,  // 改变计数器
-            isUpdateCategory: false,
-            categoryObjs: [],
+            isUpdateTag: false,
+            tagObjs: [],
             formLabelWidth: "120px",
             currentPage: 1,
             total: null,
             pageSize: 40,
-            category: {
+            tag: {
                 Id: null,
-                CategoryName: null,
-                CategoryIndex: null,
+                TagName: null,
+                TagIndex: null,
             },
-            categoryRules: {
-                CategoryName: [{required: true, message: '类别不能为空', trigger: 'blur'}],
-                CategoryIndex: [{required: true, message: '序号不能为空', trigger: 'blur'}],
+            tagRules: {
+                TagName: [{required: true, message: '标签不能为空', trigger: 'blur'}],
+                TagIndex: [{required: true, message: '序号不能为空', trigger: 'blur'}],
             }
         }
     },
     components: {  // 定义组件
     },
     created() {  // 生命周期函数
-        this.handleListCategories();
+        this.handleListTags();
     },
     methods: {  // 事件处理器
         // 关闭窗口
@@ -171,97 +171,98 @@ export default {
             }
             this.changeCount = this.changeCount + 1;
         },
-        handleCreateCategory: function() {
-            this.title = "创建类别"
+        handleCreateTag: function() {
+            this.title = "创建标签"
             let that = this;
             that.dialogVisible = true;
+            that.isUpdateTag = false;
 
-            if (that.category != null && that.category.CategoryName != null && that.category.CategoryName != "") {
-                if(that.category.Id) {
-                    that.isUpdateCategory = true;
+            if (that.tag != null && that.tag.TagName != null && that.tag.TagName != "") {
+                if (that.tag.Id) {
+                    that.isUpdateTag = true;
                 } else {
-                    that.isUpdateCategory = false;
+                    that.isUpdateTag = false;
                 }
             } else {
-                that.category = this.getInitCategoryObject();
-                that.isUpdateCategory = false;
+                that.tag = this.getInitTagObject();
+                that.isUpdateTag = false;
             }
         },
-        getInitCategoryObject: function() {
-            var categoryObject = {
+        getInitTagObject: function() {
+            var tagObject = {
                 Id: null,
-                CategoryName: null,
-                CategoryIndex: null,
+                TagName: null,
+                TagIndex: null,
             };
-            return categoryObject;
+            return tagObject;
         },
-        handleDeleteCategory: function(row) {
+        handleDeleteTag: function(row) {
             var that = this;
-            this.$confirm("此操作将把类别删除, 是否继续?", "提示", {
+            this.$confirm("此操作将把标签删除, 是否继续?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
             })
             .then(() => {
-                deleteCategory(row.Id).then(response => {
+                deleteTag(row.Id).then(response => {
                     if (response.Code == Code.SUCCESS) {
                         message.success(response.message)
                     } else {
                         message.error(response.message)
                     }
-                    this.handleListCategories();
+                    this.handleListTags();
                 });
             })
             .catch(() => {
                 message.info("已取消删除")
             });
         },
-        handleUpdateCategory: function(row) {
+        handleUpdateTag: function(row) {
             var that = this;
-            that.title = "编辑类别";
-            that.category = row;
+            that.title = "编辑标签";
+            that.tag = row;
 
             that.dialogVisible = true;
-            that.isUpdateCategory = true;
+            that.isUpdateTag = true;
         },
         // 改变页码
         handleCurrentChange(val) {
             var that = this;
             this.currentPage = val; // 改变当前所指向的页数
-            this.handleListCategories();
+            this.handleListTags();
         },
-        handleListCategories: function() {
+        handleListTags: function() {
             var offset = (this.currentPage - 1) * this.pageSize;
-            describeCategories(null, offset, this.pageSize).then(response => {
+            describeTags(null, offset, this.pageSize).then(response => {
                 if(response.Code == Code.SUCCESS) {
-                    this.categoryObjs = response.Data.CategorySet;
+                    this.tagObjs = response.Data.TagSet;
                     this.total = response.Data.Total;
                 }
             });
         },
-        submitCategory: function() {
-            this.$refs.category.validate((valid) => {
+        submitTag: function() {
+            this.$refs.tag.validate((valid) => {
                 if(!valid) {
                     console.log("校验出错")
                     return
                 }
                 
-                if (this.isUpdateCategory) {
-                    updateCategory(this.category).then(response => {
+                if (this.isUpdateTag) {
+                    updateTag(this.tag).then(response => {
                         if (response.Code == Code.SUCCESS) {
                             message.success(response.Message)
                             this.dialogVisible = false;
-                            this.handleListCategories();
+                            this.handleListTags();
                         } else {
                             message.error(response.Message)
                         }
                     });
                 } else {
-                    createCategory(this.category).then(response => {
+                    createTag(this.tag).then(response => {
                         if (response.Code == Code.SUCCESS) {
                             message.success(response.Message)
                             this.dialogVisible = false;
-                            this.handleListCategories();
+                            this.handleListTags();
                         } else {
                             message.error(response.Message)
                         }
@@ -283,7 +284,7 @@ export default {
   background: rgba(230, 244, 249, 0.85);
   opacity: 0.98;
 }
-.categoryName {
+.tagName {
     position: absolute;
     left: 10px;
     top: 6px;

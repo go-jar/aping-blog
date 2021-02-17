@@ -1,7 +1,6 @@
 package main
 
 import (
-	"blog/controller/api/category"
 	"flag"
 	"fmt"
 	"net/http"
@@ -16,6 +15,8 @@ import (
 	"github.com/go-jar/pidfile"
 
 	"blog/conf"
+	"blog/controller/api/category"
+	"blog/controller/api/tag"
 	"blog/controller/api/user"
 	"blog/errno"
 	"blog/resource"
@@ -69,6 +70,7 @@ func main() {
 	r.RegisterRoutes(
 		new(user.UserController),
 		new(category.CategoryController),
+		new(tag.TagController),
 	)
 
 	sys := system.NewSystem(r)

@@ -1,4 +1,4 @@
-package category
+package tag
 
 import (
 	"blog/conf"
@@ -12,7 +12,6 @@ import (
 
 const (
 	CacheExpireSeconds          = 60 * 60 * 24
-	TotalRowsCacheExpireSeconds = 60 * 10
 )
 
 type Svc struct {
@@ -35,12 +34,12 @@ func NewSvc(traceId []byte) *Svc {
 		},
 
 		RedisKeyPrefix: conf.CommonConf.PrjName,
-		EntityName:     "category",
+		EntityName:     "tag",
 		IdFieldName:    "Id",
 	}
 }
 
-func (s *Svc) Insert(entities ...*entity.CategoryEntity) ([]int64, error) {
+func (s *Svc) Insert(entities ...*entity.TagEntity) ([]int64, error) {
 	var err error
 	is := make([]interface{}, len(entities))
 	for i, item := range entities {
@@ -49,7 +48,7 @@ func (s *Svc) Insert(entities ...*entity.CategoryEntity) ([]int64, error) {
 
 	ids, err := s.SqlRedis.Insert(s.EntityName, s.EntityName, s.IdFieldName, s.RedisKeyPrefix, CacheExpireSeconds, is...)
 	if err != nil {
-		s.ErrorLog([]byte("Category.Insert"), []byte(err.Error()))
+		s.ErrorLog([]byte("TagSvc.Insert"), []byte(err.Error()))
 	}
 
 	return ids, err
@@ -58,27 +57,27 @@ func (s *Svc) Insert(entities ...*entity.CategoryEntity) ([]int64, error) {
 func (s *Svc) DeleteById(id int64) (bool, error) {
 	find, err := s.SqlRedis.DeleteById(s.EntityName, s.EntityName, s.RedisKeyPrefix, id)
 	if err != nil {
-		s.ErrorLog([]byte("CategorySvc.DeleteById"), []byte(err.Error()))
+		s.ErrorLog([]byte("TagSvc.DeleteById"), []byte(err.Error()))
 	}
 
 	return find, err
 }
 
-func (s *Svc) UpdateById(id int64, newEntity *entity.CategoryEntity, updateFields map[string]bool) (bool, error) {
+func (s *Svc) UpdateById(id int64, newEntity *entity.TagEntity, updateFields map[string]bool) (bool, error) {
 	setItems, err := s.SqlRedis.UpdateById(s.EntityName, s.EntityName, s.RedisKeyPrefix, id, newEntity, updateFields, CacheExpireSeconds)
 	if err != nil {
-		s.ErrorLog([]byte("CategorySvc.UpdateById"), []byte(err.Error()))
+		s.ErrorLog([]byte("TagSvc.UpdateById"), []byte(err.Error()))
 	}
 
 	return setItems != nil, err
 }
 
-func (s *Svc) GetById(id int64) (*entity.CategoryEntity, error) {
-	user := new(entity.CategoryEntity)
+func (s *Svc) GetById(id int64) (*entity.TagEntity, error) {
+	user := new(entity.TagEntity)
 
 	find, err := s.SqlRedis.GetById(s.EntityName, s.EntityName, s.RedisKeyPrefix, id, CacheExpireSeconds, user)
 	if err != nil {
-		s.ErrorLog([]byte("CategorySvc.GetById"), []byte(err.Error()))
+		s.ErrorLog([]byte("TagSvc.GetById"), []byte(err.Error()))
 	}
 
 	if !find {
@@ -88,12 +87,12 @@ func (s *Svc) GetById(id int64) (*entity.CategoryEntity, error) {
 	return user, nil
 }
 
-func (s *Svc) SimpleQueryAnd(qp *mysql.QueryParams) ([]*entity.CategoryEntity, error) {
-	var entities []*entity.CategoryEntity
+func (s *Svc) SimpleQueryAnd(qp *mysql.QueryParams) ([]*entity.TagEntity, error) {
+	var entities []*entity.TagEntity
 
-	err := s.SqlOrm.SimpleQueryAnd(s.EntityName, qp, entity.CategoryEntityType, &entities)
+	err := s.SqlOrm.SimpleQueryAnd(s.EntityName, qp, entity.TagEntityType, &entities)
 	if err != nil {
-		s.ErrorLog([]byte("CategorySvc.SimpleQueryAnd"), []byte(err.Error()))
+		s.ErrorLog([]byte("TagSvc.SimpleQueryAnd"), []byte(err.Error()))
 		return nil, err
 	}
 
@@ -103,7 +102,7 @@ func (s *Svc) SimpleQueryAnd(qp *mysql.QueryParams) ([]*entity.CategoryEntity, e
 func (s *Svc) SimpleTotalAnd(qp *mysql.QueryParams) (int64, error) {
 	total, err := s.SqlOrm.SimpleTotalAnd(s.EntityName, qp)
 	if err != nil {
-		s.ErrorLog([]byte("CategorySvc.SimpleTotalAnd"), []byte(err.Error()))
+		s.ErrorLog([]byte("TagSvc.SimpleTotalAnd"), []byte(err.Error()))
 		return -1, err
 	}
 

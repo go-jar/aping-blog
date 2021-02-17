@@ -6,7 +6,7 @@
             <!-- 列出类别 -->
             <el-row>
                 <el-col
-                    v-for="item in this.categoryObjs"
+                    v-for="item in this.tagObjs"
                     :key="item.Id"
                     style="padding: 6px"
                     :xs="24"
@@ -21,7 +21,7 @@
                         style="position: relative"
                         shadow="always"
                     >
-                        <div class="categoryName">{{item.CategoryName}}</div>
+                        <div class="tagName">{{item.TagName}}</div>
                     </el-card>
                 </el-col>
             </el-row>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import {describeCategories} from "@/api/category";
+import {describeTags} from "@/api/tag";
 import {Code} from '@/const/code.js'
 import {message} from '@/utils/common'
 
@@ -51,21 +51,21 @@ export default {
         return {
             title: null,
             isChange: false,  // 内容是否改变
-            categoryObjs: [],
+            tagObjs: [],
             formLabelWidth: "120px",
             currentPage: 1,
             total: null,
             pageSize: 40,
-            category: {
+            tag: {
                 Id: null,
-                CategoryName: null,
+                TagName: null,
             },
         }
     },
     components: {  // 定义组件
     },
     created() {  // 生命周期函数
-        this.handleListCategories();
+        this.handleListTags();
     },
     methods: {  // 事件处理器
         // 关闭窗口
@@ -102,13 +102,13 @@ export default {
         handleCurrentChange(val) {
             var that = this;
             this.currentPage = val; // 改变当前所指向的页数
-            this.handleListCategories();
+            this.handleListTags();
         },
-        handleListCategories: function() {
+        handleListTags: function() {
             var offset = (this.currentPage - 1) * this.pageSize;
-            describeCategories(null, offset, this.pageSize).then(response => {
+            describeTags(null, offset, this.pageSize).then(response => {
                 if(response.Code == Code.SUCCESS) {
-                    this.categoryObjs = response.Data.CategorySet;
+                    this.tagObjs = response.Data.TagSet;
                     this.total = response.Data.Total;
                 }
             });
@@ -127,7 +127,7 @@ export default {
   background: rgba(230, 244, 249, 0.85);
   opacity: 0.98;
 }
-.categoryName {
+.tagName {
     position: absolute;
     left: 10px;
     top: 6px;
