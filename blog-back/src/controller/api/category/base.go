@@ -28,6 +28,8 @@ type CategoryController struct {
 func (cc *CategoryController) NewActionContext(req *http.Request, respWriter http.ResponseWriter) ctl.ActionContext {
 	ctx := new(CategoryContext)
 	ctx.ApiContext = cc.BaseController.NewActionContext(req, respWriter).(*api.ApiContext)
-
+	ctx.ApiData.Data = map[string]interface{}{
+		"RequestId": ctx.TraceId,
+	}
 	return ctx
 }

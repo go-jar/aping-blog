@@ -5,17 +5,17 @@
 </template>
 
 <script>
+import {Code} from '@/const/code.js'
 import Vditor from 'vditor'
 import "vditor/dist/index.css"
-import {GetToken} from '@/utils/auth'
+import "vditor/dist/index.min.js"
 import {htmlToMarkdownFile} from '@/utils/common'
 
 export default {
   name: 'MarkdownEditor',
-  props: ["height"],
+  props: ["height", "content"],
   data() {
     return {
-      isLoading: true,
       isMobile: window.innerWidth <= 960,
       vditor: null,
     }
@@ -25,17 +25,14 @@ export default {
   components: {
   },
   mounted() {
-    this.initVditor()
-    this.$nextTick(() => {
-      this.isLoading = false
-    })
+    this.initVditor();
   },
   methods: {
     initVditor() {
       const that = this
       const options = {
         cache: {
-          enable: false,
+          enable: true,
         },
         mode: 'ir',
         height: this.height,  // 编辑器总高度
@@ -51,25 +48,34 @@ export default {
             style: 'vim',  
             lineNumber: true
           },
-          markdown: {
-            toc: true  // 展示目录
-          }
+          outline: {  // 显示大纲
+            enable: true
+          },
+          // markdown: {
+          //   toc: true  // 展示目录
+          // }
         },
         toolbarConfig: {
             pin: false,  // 是否固定工具栏
         },
+        after: () => {
+          if (this.content) {
+            this.vditor.setValue(this.content)
+          }
+        },
         upload: {
+          url: process.env.WEB_API + '/file/upload',
           max: 5 * 1024 * 1024,
-          // linkToImgUrl: 'https://sm.ms/api/upload',
-          handler(file) {
+          linkToImgUrl: process.env.WEB_API + '/file/upload',
+          handler(files) {
             let formData = new FormData()
-            for (let i in file) {
-              formData.append('smfile', file[i])
+            for (let i = 0; i < files.length; i++) {
+              formData.append('file', files[i])
             }
             let request = new XMLHttpRequest()
             // 图片上传路径
-            request.open('POST', process.env.PICTURE_API + '/ckeditor/imgUpload?token=' + GetToken())
-            request.onload = that.onloadCallback
+            request.open('POST', process.env.WEB_API + '/file/upload')
+            request.onload = that.onloadCallback 
             request.send(formData)
           }
         }
@@ -86,40 +92,41 @@ export default {
           message: currentTarget.status + ' ' + currentTarget.statusText
         })
       }
+
       let resp = JSON.parse(currentTarget.response)
       let imgMdStr = ''
-      if (resp.uploaded !== 1) {
+      
+      if (resp.Code === Code.SUCCESS) {
+        imgMdStr = `![${'img'}](${resp.Data.ImgUrl})`
+      } else {
         return this.$message({
           type: 'error',
-          message: resp.error.message
+          message: resp.Msg
         })
-      }
-      if (resp.uploaded === 1) {
-        imgMdStr = `![${resp.fileName}](${resp.url})`
       }
       this.vditor.insertValue(imgMdStr)
     },
     // 获取data
     getData: function() {
-      return this.vditor.getHTML();
+      // return this.vditor.getHTML();
+      return this.vditor.getValue();
     },
     setData: function(data) {
       var that = this;
       this.$nextTick(() => {
-        // DOM现在更新了
-        let vditor = that.initVditor()
-        let markdownText = commonUtil.htmlToMarkdown(data)
-        localStorage.setItem('vditor', markdownText)
+        // DOM 现在更新了
+        let markdownText = htmlToMarkdownFile(data)
+        that.vditor.setValue(markdownText)
       });
     },
     initData: function () {
       var that = this
       this.$nextTick(() => {
-        if(that.vditor.vditor.lute) {
+        if(that.vditor.lute) {
           that.vditor.setValue("")
         }
       });
-    }
+    },
   }
 }
 </script>

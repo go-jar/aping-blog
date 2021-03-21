@@ -422,5 +422,5 @@ const Typeit = (emId) =>{
 }
 
 export {
-    Typeit // 打字效果
+    Typeit, // 打字效果
 }

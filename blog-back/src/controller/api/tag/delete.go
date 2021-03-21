@@ -27,7 +27,7 @@ func (tc *TagController) DeleteAction(context *TagContext) {
 func (tc *TagController) parseDeleteActionParams(context *TagContext) (int64, *goerror.Error) {
 	var id int64
 	qs := query.NewQuerySet()
-	qs.Int64Var(&id, "Id", true, errno.ECommonInvalidArg, "invalid Id", query.CheckInt64IsPositive)
+	qs.Int64Var(&id, "Id", true, errno.ECommonInvalidArg, "invalid Id", query.CheckInt64GreaterEqual0)
 
 	if err := qs.Parse(context.QueryValues); err != nil {
 		context.ErrorLog([]byte("TagController.parseCreateActionParams"), []byte(err.Error()))

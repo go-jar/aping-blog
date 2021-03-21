@@ -7,11 +7,14 @@ export const constantRouterMap = [
 	{ path: '/home', component: () => import('@/pages/Home') },
 	{ path: '/admin-login', component: () => import('@/pages/AdminLogin') },
 	{ path: '/about', component: () => import('@/pages/About') },
-	{ path: '/create-article', component: () => import('@/pages/CreateArticle') },
+	{ path: '/edit-article', component: () => import('@/pages/EditArticle') },
+	{ path: '/article', component: () => import('@/pages/ArticleDetail') },
 	{ path: '/manage-cagegory', component: () => import('@/pages/ManageCategory') },
 	{ path: '/manage-tag', component: () => import('@/pages/ManageTag') },
 	{ path: '/list-categories', component: () => import('@/pages/ListCategories') },
 	{ path: '/list-tags', component: () => import('@/pages/ListTags') },
+	{ path: '/category', component: () => import('@/pages/ListArticlesByCategory') },
+	{ path: '/tag', component: () => import('@/pages/ListArticlesByTag') },
 ]
 
 const router = new Router({

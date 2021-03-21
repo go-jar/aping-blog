@@ -14,28 +14,33 @@
 					{{this.$store.state.themeObj.autograph?this.$store.state.themeObj.autograph:"Write the Code. Change the World."}}
 				</a>
 			</h2>
+			<div class="articles">
+				<ListArticles></ListArticles>
+			</div>
 		</div>
 	</div>
 </div>
 </template>
 
 <script>
+import ListArticles from '@/components/ListArticles'
+
 export default {
 	watch: {
 	},
 	methods: { // 事件处理器
 	},
 	components: { // 定义组件
-
+		ListArticles,
 	},
 }
 </script>
-
+	
 <style>
 /*头部背景图*/
 
 .headImgBox {
-	height: 100%;
+	height: 99%;
 	position: relative;
 	width: 100%;
 	background-size: cover;
@@ -48,7 +53,7 @@ export default {
 	width: 70%;
 	margin: auto;
 	position: relative;
-	top: 480px;
+	top: 290px;
 	padding: 40px 0;
 	font-size: 16px;
 	opacity: 0.9;
@@ -57,6 +62,11 @@ export default {
 	z-index: 1;
 	animation: b 1s ease-out;
 	-webkit-animation: b 1s ease-out;
+}
+
+.articles {
+	margin-top: 20px;
+	color: #fff;
 }
 
 @-webkit-keyframes b {
@@ -131,7 +141,7 @@ export default {
 	color: #fff;
 	position: absolute;
 	left: 0;
-	top: 160px;
+	top: 80px;
 	font-family: 'Sigmar One', Arial;
 	text-shadow: 0 2px 2px #47456d;
 

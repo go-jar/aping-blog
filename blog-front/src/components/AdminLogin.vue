@@ -26,7 +26,7 @@
 import {adminLogin} from '@/api/user.js'
 import {Code} from '@/const/code.js'
 import {LoginKey} from '@/const/login.js'
-import {GetToken, SetToken} from '@/utils/auth.js'
+import {getToken, setToken} from '@/utils/auth.js'
 
 export default {
     data() { // 选项 / 数据
@@ -58,7 +58,7 @@ export default {
             if (!that.usernameErr && !that.passwordErr) {
                 adminLogin(that.username, that.password).then(response => {
                     if (response.Code == Code.SUCCESS) { // 登录成功
-                        SetToken(response.Data.Token);
+                        setToken(response.Data.Token);
                         that.$router.push({
                             path: '/'
                         });

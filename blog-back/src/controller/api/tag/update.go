@@ -16,7 +16,7 @@ func (tc *TagController) UpdateAction(context *TagContext) {
 	}
 
 	required := map[string]bool{
-		"tag_name": true,
+		"tag_name":  true,
 		"tag_index": true,
 	}
 
@@ -34,9 +34,9 @@ func (tc *TagController) parseUpdateActionParams(context *TagContext) (*entity.T
 	tagEntity := &entity.TagEntity{}
 
 	qs := query.NewQuerySet()
-	qs.Int64Var(&tagEntity.Id, "Id", true, errno.ECommonInvalidArg, "invalid Id", tc.CheckInt64GreaterEqual0)
+	qs.Int64Var(&tagEntity.Id, "Id", true, errno.ECommonInvalidArg, "invalid Id", query.CheckInt64GreaterEqual0)
 	qs.StringVar(&tagEntity.TagName, "TagName", true, errno.ECommonInvalidArg, "invalid TagName", query.CheckStringNotEmpty)
-	qs.Int64Var(&tagEntity.TagIndex, "TagIndex", false, errno.ECommonInvalidArg, "invalid TagIndex", tc.CheckInt64GreaterEqual0)
+	qs.Int64Var(&tagEntity.TagIndex, "TagIndex", false, errno.ECommonInvalidArg, "invalid TagIndex", query.CheckInt64GreaterEqual0)
 
 	if err := qs.Parse(context.QueryValues); err != nil {
 		context.ErrorLog([]byte("TagController.parseCreateActionParams"), []byte(err.Error()))

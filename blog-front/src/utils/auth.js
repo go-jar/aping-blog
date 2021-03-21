@@ -1,13 +1,13 @@
 import {LoginKey} from '../const/login.js'
 
-export function GetToken() {
+export function getToken() {
   return localStorage.getItem(LoginKey.ACCESS_TOKEN)
 }
 
-export function SetToken(token, username) {
+export function setToken(token, username) {
     localStorage.setItem(LoginKey.ACCESS_TOKEN, token);
 }
 
-export function RemoveToken() {
+export function removeToken() {
     localStorage.setItem(LoginKey.ACCESS_TOKEN, '');
 }

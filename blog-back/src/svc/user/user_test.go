@@ -1,14 +1,14 @@
 package user
 
 import (
-	"blog/errno"
-	"blog/resource/log"
 	"fmt"
 	"os"
 	"testing"
 
 	"blog/conf"
+	"blog/errno"
 	"blog/resource"
+	"blog/resource/log"
 )
 
 func TestSvc(t *testing.T) {

@@ -54,8 +54,8 @@ func TestCategorySvc(t *testing.T) {
 
 	qp := &mysql.QueryParams{
 		OrderBy: "id desc",
-		Offset: 0,
-		Cnt: 10,
+		Offset:  0,
+		Cnt:     10,
 	}
 	entities, err := categorySvc.SimpleQueryAnd(qp)
 	for _, entity := range entities {

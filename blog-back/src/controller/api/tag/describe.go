@@ -1,8 +1,6 @@
 package tag
 
 import (
-	"fmt"
-
 	"github.com/go-jar/goerror"
 	"github.com/go-jar/gohttp/query"
 	"github.com/go-jar/mysql"
@@ -57,7 +55,7 @@ func (tc *TagController) parseDescribeActionParams(context *TagContext) (*mysql.
 		qp.Required = map[string]bool{"id": true}
 		qp.Conditions = map[string]string{"id": mysql.CondEqual}
 	}
-	fmt.Println(qp)
+	
 	return qp, nil
 }
 

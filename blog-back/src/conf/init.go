@@ -26,6 +26,7 @@ func Init(prjHome string) error {
 	initMysqlConf()
 	initRedisConf()
 	initLoginConf()
+	initTcloudAccountConf()
 
 	return nil
 }

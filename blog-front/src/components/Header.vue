@@ -17,7 +17,7 @@
 							<el-menu-item index="/manage-tag">标签</el-menu-item>
 						</el-submenu>
 						<div class="createArticle">
-							<el-menu-item v-show="adminLogin" index="/create-article"><i class="fa fa-fw fa-user-circle userImg"></i> 创作</el-menu-item>
+							<el-menu-item v-show="adminLogin" index="/edit-article"><i class="fa fa-fw fa-user-circle userImg"></i> 创作</el-menu-item>
 						</div>
 						<div index="" class="pcsearchbox">
 							<i class="el-icon-search pcsearchicon"></i>
@@ -116,16 +116,12 @@ export default {
 			} else {
 				that.adminLogin = false;
 			}
-			// ArticleClassData(function(msg) { // 文章分类
-			// 	// console.log(msg);
-			// 	that.articleClassListObj = msg;
-			// })
-			if ((this.$route.name == "BlogList" || this.$route.name == "Home") && this.$store.state.keywords) {
-				this.input = this.$store.state.keywords;
-			} else {
-				this.input = '';
-				this.$store.state.keywords = '';
-			}
+			// if ((this.$route.name == "BlogList" || this.$route.name == "Home") && this.$store.state.keywords) {
+			// 	this.input = this.$store.state.keywords;
+			// } else {
+			// 	this.input = '';
+			// 	this.$store.state.keywords = '';
+			// }
 		}
 	},
 	components: { // 定义组件

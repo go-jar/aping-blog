@@ -21,7 +21,13 @@
                         style="position: relative"
                         shadow="always"
                     >
-                        <div class="tagName">{{item.TagName}}</div>
+                        <div class="tagName">
+                            <div class="in-title">
+                                 <a :href="'#/tag?id='+item.Id">
+                                    {{item.TagName}}
+                                </a>
+                            </div>
+                        </div>
                     </el-card>
                 </el-col>
             </el-row>
@@ -127,18 +133,20 @@ export default {
   background: rgba(230, 244, 249, 0.85);
   opacity: 0.98;
 }
+a {
+  color: #fff; 
+}
 .tagName {
-    position: absolute;
-    left: 10px;
-    top: 6px;
+    height: 100%;
     z-index: 2;
-    /*top: 15px;*/
-    background: rgba(58, 59, 59, 0.85);
+    background: rgba(58, 59, 59);
     color: #FFF;
-    padding: 3px 8px;
-    font-size: 14px;
+    font-size: 16px;
     border-radius: 3px;
-    width: 70%;
+    width: 100%;
     text-align: center;
+}
+.in-title {
+    padding-top: 6px;
 }
 </style>

@@ -1,13 +1,14 @@
 package category
 
 import (
+	"github.com/go-jar/mysql"
+	"github.com/go-jar/redis"
+	"github.com/go-jar/sqlredis"
+
 	"blog/conf"
 	"blog/entity"
 	"blog/resource"
 	"blog/svc"
-	"github.com/go-jar/mysql"
-	"github.com/go-jar/redis"
-	"github.com/go-jar/sqlredis"
 )
 
 const (
@@ -49,7 +50,7 @@ func (s *Svc) Insert(entities ...*entity.CategoryEntity) ([]int64, error) {
 
 	ids, err := s.SqlRedis.Insert(s.EntityName, s.EntityName, s.IdFieldName, s.RedisKeyPrefix, CacheExpireSeconds, is...)
 	if err != nil {
-		s.ErrorLog([]byte("Category.Insert"), []byte(err.Error()))
+		s.ErrorLog([]byte("CategorySvc.Insert"), []byte(err.Error()))
 	}
 
 	return ids, err
@@ -74,9 +75,9 @@ func (s *Svc) UpdateById(id int64, newEntity *entity.CategoryEntity, updateField
 }
 
 func (s *Svc) GetById(id int64) (*entity.CategoryEntity, error) {
-	user := new(entity.CategoryEntity)
+	category := new(entity.CategoryEntity)
 
-	find, err := s.SqlRedis.GetById(s.EntityName, s.EntityName, s.RedisKeyPrefix, id, CacheExpireSeconds, user)
+	find, err := s.SqlRedis.GetById(s.EntityName, s.EntityName, s.RedisKeyPrefix, id, CacheExpireSeconds, category)
 	if err != nil {
 		s.ErrorLog([]byte("CategorySvc.GetById"), []byte(err.Error()))
 	}
@@ -85,7 +86,7 @@ func (s *Svc) GetById(id int64) (*entity.CategoryEntity, error) {
 		return nil, nil
 	}
 
-	return user, nil
+	return category, nil
 }
 
 func (s *Svc) SimpleQueryAnd(qp *mysql.QueryParams) ([]*entity.CategoryEntity, error) {

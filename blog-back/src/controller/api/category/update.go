@@ -16,10 +16,9 @@ func (cc *CategoryController) UpdateAction(context *CategoryContext) {
 	}
 
 	required := map[string]bool{
-		"category_name": true,
+		"category_name":  true,
 		"category_index": true,
 	}
-
 	if _, err := context.categorySvc.UpdateById(categoryEntity.Id, categoryEntity, required); err != nil {
 		context.ApiData.Err = goerror.New(errno.ESysMysqlError, err.Error())
 		return
@@ -34,9 +33,9 @@ func (cc *CategoryController) parseUpdateActionParams(context *CategoryContext) 
 	categoryEntity := &entity.CategoryEntity{}
 
 	qs := query.NewQuerySet()
-	qs.Int64Var(&categoryEntity.Id, "Id", true, errno.ECommonInvalidArg, "invalid Id", cc.CheckInt64GreaterEqual0)
+	qs.Int64Var(&categoryEntity.Id, "Id", true, errno.ECommonInvalidArg, "invalid Id", query.CheckInt64GreaterEqual0)
 	qs.StringVar(&categoryEntity.CategoryName, "CategoryName", true, errno.ECommonInvalidArg, "invalid CategoryName", query.CheckStringNotEmpty)
-	qs.Int64Var(&categoryEntity.CategoryIndex, "CategoryIndex", false, errno.ECommonInvalidArg, "invalid CategoryIndex", cc.CheckInt64GreaterEqual0)
+	qs.Int64Var(&categoryEntity.CategoryIndex, "CategoryIndex", false, errno.ECommonInvalidArg, "invalid CategoryIndex", query.CheckInt64GreaterEqual0)
 
 	if err := qs.Parse(context.QueryValues); err != nil {
 		context.ErrorLog([]byte("CategoryController.parseCreateActionParams"), []byte(err.Error()))

@@ -33,7 +33,7 @@
         methods: { // 事件处理器
             runTime: function(){ // 运行倒计时
                 var that = this;
-                var oldTime =new Date('2020/12/06 00:00:00');  // 博客上线时间
+                var oldTime =new Date('2021/03/26 00:00:00');  // 博客上线时间
                 var timer = setInterval(function(){
                     var nowTime = new Date();
                     var longTime = nowTime - oldTime;

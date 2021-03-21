@@ -6,4 +6,7 @@ const (
 	ESysMysqlError    = "ESysMysqlError"
 
 	EUserUnauthorized = "EUserUnauthorized"
+	ETCloudCosError = "ETCloudCosError"
+	EParseRequestError = "EParseRequestError"
+	EDecodeRequestError = "EDecodeRequestError"
 )

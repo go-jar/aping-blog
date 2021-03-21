@@ -8,7 +8,7 @@ import (
 type CategoryEntity struct {
 	Id            int64     `mysql:"id" redis:"id" json:"Id"`
 	CategoryName  string    `mysql:"category_name" redis:"category_name" json:"CategoryName"`
-	CategoryIndex int64       `mysql:"category_index" redis:"category_index" json:"CategoryIndex"`
+	CategoryIndex int64     `mysql:"category_index" redis:"category_index" json:"CategoryIndex"`
 	CreatedTime   time.Time `mysql:"created_time" redis:"created_time" json:"CreatedTime"`
 	UpdatedTime   time.Time `mysql:"updated_time" redis:"updated_time" json:"UpdatedTime"`
 }

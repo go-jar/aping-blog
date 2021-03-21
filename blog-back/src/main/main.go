@@ -1,6 +1,7 @@
 package main
 
 import (
+	"blog/controller/api/file"
 	"flag"
 	"fmt"
 	"net/http"
@@ -15,6 +16,7 @@ import (
 	"github.com/go-jar/pidfile"
 
 	"blog/conf"
+	"blog/controller/api/article"
 	"blog/controller/api/category"
 	"blog/controller/api/tag"
 	"blog/controller/api/user"
@@ -71,6 +73,8 @@ func main() {
 		new(user.UserController),
 		new(category.CategoryController),
 		new(tag.TagController),
+		new(article.ArticleController),
+		new(file.FileController),
 	)
 
 	sys := system.NewSystem(r)

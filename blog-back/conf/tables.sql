@@ -42,3 +42,15 @@ CREATE TABLE IF NOT EXISTS `tag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 INSERT INTO id_gen (name, max_id) VALUES ('tag', 0);
+
+CREATE TABLE IF NOT EXISTS `article` (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `title` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+    `category_id` bigint(20) NOT NULL DEFAULT 0,
+    `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+    `read_count` bigint(20) NOT NULL DEFAULT 0,
+    `created_time` datetime NOT NULL,
+    `updated_time` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+
+INSERT INTO id_gen (name, max_id) VALUES ('article', 0);

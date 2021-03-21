@@ -1,9 +1,9 @@
 package resource
 
 import (
-	"blog/conf"
-
 	"github.com/go-jar/mysql"
+
+	"blog/conf"
 )
 
 var MysqlClientPool *mysql.Pool

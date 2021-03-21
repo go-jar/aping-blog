@@ -1,8 +1,6 @@
 package category
 
 import (
-	"fmt"
-
 	"github.com/go-jar/goerror"
 	"github.com/go-jar/gohttp/query"
 	"github.com/go-jar/mysql"
@@ -43,9 +41,9 @@ func (cc *CategoryController) parseDescribeActionParams(context *CategoryContext
 	id = -1
 
 	qs := query.NewQuerySet()
-	qs.Int64Var(&qp.Offset, "Offset", false, errno.ECommonInvalidArg, "invalid Offset", cc.CheckInt64GreaterEqual0)
-	qs.Int64Var(&qp.Cnt, "Limit", false, errno.ECommonInvalidArg, "invalid Cnt", cc.CheckInt64GreaterEqual0)
-	qs.Int64Var(&id, "Id", false, errno.ECommonInvalidArg, "invalid Id", cc.CheckInt64GreaterEqual0)
+	qs.Int64Var(&qp.Offset, "Offset", false, errno.ECommonInvalidArg, "invalid Offset", query.CheckInt64GreaterEqual0)
+	qs.Int64Var(&qp.Cnt, "Limit", false, errno.ECommonInvalidArg, "invalid Cnt", query.CheckInt64GreaterEqual0)
+	qs.Int64Var(&id, "Id", false, errno.ECommonInvalidArg, "invalid Id", query.CheckInt64GreaterEqual0)
 
 	if err := qs.Parse(context.QueryValues); err != nil {
 		context.ErrorLog([]byte("CategoryController.parseDescribeActionParams"), []byte(err.Error()))
@@ -57,13 +55,6 @@ func (cc *CategoryController) parseDescribeActionParams(context *CategoryContext
 		qp.Required = map[string]bool{"id": true}
 		qp.Conditions = map[string]string{"id": mysql.CondEqual}
 	}
-	fmt.Println(qp)
-	return qp, nil
-}
 
-func (cc *CategoryController) CheckInt64GreaterEqual0(v int64) bool {
-	if v >= 0 {
-		return true
-	}
-	return false
+	return qp, nil
 }

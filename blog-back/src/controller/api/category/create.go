@@ -1,7 +1,6 @@
 package category
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/go-jar/goerror"
@@ -32,18 +31,18 @@ func (cc *CategoryController) CreateAction(context *CategoryContext) {
 
 func (cc *CategoryController) parseCreateActionParams(context *CategoryContext) (*entity.CategoryEntity, *goerror.Error) {
 	categoryEntity := &entity.CategoryEntity{
-		CreatedTime:   time.Now(),
-		UpdatedTime:   time.Now(),
+		CreatedTime: time.Now(),
+		UpdatedTime: time.Now(),
 	}
 
 	qs := query.NewQuerySet()
 	qs.StringVar(&categoryEntity.CategoryName, "CategoryName", true, errno.ECommonInvalidArg, "invalid CategoryName", query.CheckStringNotEmpty)
-	qs.Int64Var(&categoryEntity.CategoryIndex, "CategoryIndex", false, errno.ECommonInvalidArg, "invalid CategoryIndex", cc.CheckInt64GreaterEqual0)
+	qs.Int64Var(&categoryEntity.CategoryIndex, "CategoryIndex", false, errno.ECommonInvalidArg, "invalid CategoryIndex", query.CheckInt64GreaterEqual0)
 
 	if err := qs.Parse(context.QueryValues); err != nil {
 		context.ErrorLog([]byte("CategoryController.parseCreateActionParams"), []byte(err.Error()))
 		return nil, err
 	}
-	fmt.Println(context.QueryValues)
+
 	return categoryEntity, nil
 }

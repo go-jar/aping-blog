@@ -1,17 +1,19 @@
 package tag
 
 import (
+	"github.com/go-jar/mysql"
+	"github.com/go-jar/redis"
+	"github.com/go-jar/sqlredis"
+	"reflect"
+
 	"blog/conf"
 	"blog/entity"
 	"blog/resource"
 	"blog/svc"
-	"github.com/go-jar/mysql"
-	"github.com/go-jar/redis"
-	"github.com/go-jar/sqlredis"
 )
 
 const (
-	CacheExpireSeconds          = 60 * 60 * 24
+	CacheExpireSeconds = 60 * 60 * 24
 )
 
 type Svc struct {
@@ -72,19 +74,15 @@ func (s *Svc) UpdateById(id int64, newEntity *entity.TagEntity, updateFields map
 	return setItems != nil, err
 }
 
-func (s *Svc) GetById(id int64) (*entity.TagEntity, error) {
-	user := new(entity.TagEntity)
+func (s *Svc) GetByIds(ids []int64) ([]*entity.TagEntity, error) {
+	var data []*entity.TagEntity
+	tagEntityType := reflect.TypeOf(entity.TagEntity{})
 
-	find, err := s.SqlRedis.GetById(s.EntityName, s.EntityName, s.RedisKeyPrefix, id, CacheExpireSeconds, user)
-	if err != nil {
-		s.ErrorLog([]byte("TagSvc.GetById"), []byte(err.Error()))
+	if err := s.SqlOrm.ListByIds(s.EntityName, ids, "", tagEntityType, &data); err != nil {
+		return nil, err
+	} else {
+		return data, nil
 	}
-
-	if !find {
-		return nil, nil
-	}
-
-	return user, nil
 }
 
 func (s *Svc) SimpleQueryAnd(qp *mysql.QueryParams) ([]*entity.TagEntity, error) {

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {Code} from '../const/code.js'
-import {GetToken, RemoveToken} from '../utils/auth.js'
+import {getToken, removeToken} from '../utils/auth.js'
 
 // 创建 axios 实例
 const service = axios.create({
@@ -11,8 +11,8 @@ const service = axios.create({
 // request 拦截器
 service.interceptors.request.use(
   config => {
-    if (GetToken() != '') {
-        config.headers['X-Token'] = GetToken() // 让每个请求携带自定义 token 请根据实际情况自行修改
+    if (getToken() != '') {
+        config.headers['X-Token'] = getToken() // 让每个请求携带自定义 token 请根据实际情况自行修改
     }
     return config
   },
@@ -39,7 +39,7 @@ service.interceptors.response.use(
           type: 'warning'
         }
       ).then(() => {
-        RemoveToken();
+        removeToken();
         location.reload() // 为了重新实例化 vue-router 对象 避免 bug
       })
       return Promise.reject('error')

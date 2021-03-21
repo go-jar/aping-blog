@@ -1,18 +1,16 @@
 package tag
 
 import (
-	"fmt"
-	"os"
-	"testing"
-	"time"
-
-	"github.com/go-jar/mysql"
-
 	"blog/conf"
 	"blog/entity"
 	"blog/errno"
 	"blog/resource"
 	"blog/resource/log"
+	"fmt"
+	"github.com/go-jar/mysql"
+	"os"
+	"testing"
+	"time"
 )
 
 func prepare() {
@@ -33,7 +31,7 @@ func prepare() {
 	resource.InitRedis()
 }
 
-func TestCategorySvc(t *testing.T) {
+func TestTagSvc(t *testing.T) {
 	prepare()
 
 	tagSvc := NewSvc([]byte("traceCategorySvc"))
@@ -43,9 +41,6 @@ func TestCategorySvc(t *testing.T) {
 		&entity.TagEntity{TagName: "a2", CreatedTime: time.Now(), UpdatedTime: time.Now()},
 	)
 	t.Log(ids, err)
-
-	item, err := tagSvc.GetById(ids[0])
-	t.Log(item, err)
 
 	tagEntity := entity.TagEntity{TagName: "b1"}
 	if _, err := tagSvc.UpdateById(ids[0], &tagEntity, map[string]bool{"tag_name": true}); err != nil {
@@ -68,5 +63,22 @@ func TestCategorySvc(t *testing.T) {
 	for _, id := range ids {
 		deleted, err := tagSvc.DeleteById(id)
 		t.Log(deleted, err)
+	}
+}
+
+func TestSvc_GetByIds(t *testing.T) {
+	prepare()
+
+	tagSvc := NewSvc([]byte("traceCategorySvc"))
+	var tagIds []int64
+	tagIds = append(tagIds, 12)
+	tagIds = append(tagIds, 14)
+	tagEntities, err := tagSvc.GetByIds(tagIds)
+	if err != nil {
+		t.Error(err)
+	}
+
+	for _, tag := range tagEntities {
+		t.Log(tag.TagName)
 	}
 }

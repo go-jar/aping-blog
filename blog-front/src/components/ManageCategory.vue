@@ -33,7 +33,7 @@
                                     <el-button
                                         size="mini"
                                         icon="el-icon-copy-document"
-                                        @click="goSubjectItem(item)"
+                                        @click="handleListArticles(item)"
                                     />`
                                     </el-tooltip>
 
@@ -83,14 +83,14 @@
                     <el-row>
                         <el-col :span="22">
                             <el-form-item label="类别" :label-width="formLabelWidth">
-                                <el-input v-model="category.CategoryName" auto-complete="off" @input="contentChange" ref="categoryName"></el-input>
+                                <el-input v-model="category.CategoryName" auto-complete="off" @input="contentChange" ref="categoryName" prop="categoryName"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row>
                         <el-col :span="22">
                             <el-form-item label="序号" :label-width="formLabelWidth">
-                                <el-input v-model="category.CategoryIndex" auto-complete="off" @input="contentChange" ref="categoryIndex"></el-input>
+                                <el-input v-model="category.CategoryIndex" auto-complete="off" @input="contentChange" ref="categoryIndex" prop="categoryIndex"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -130,8 +130,8 @@ export default {
                 CategoryIndex: null,
             },
             categoryRules: {
-                CategoryName: [{required: true, message: '类别不能为空', trigger: 'blur'}],
-                CategoryIndex: [{required: true, message: '序号不能为空', trigger: 'blur'}],
+                categoryName: [{required: true, message: '类别不能为空', trigger: 'blur'}],
+                categoryIndex: [{required: true, message: '序号不能为空', trigger: 'blur'}],
             }
         }
     },

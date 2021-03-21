@@ -33,7 +33,7 @@
                                     <el-button
                                         size="mini"
                                         icon="el-icon-copy-document"
-                                        @click="goSubjectItem(item)"
+                                        @click="handleListArticles(item)"
                                     />`
                                     </el-tooltip>
 
@@ -83,14 +83,14 @@
                     <el-row>
                         <el-col :span="22">
                             <el-form-item label="标签" :label-width="formLabelWidth">
-                                <el-input v-model="tag.TagName" auto-complete="off" @input="contentChange" ref="tagName"></el-input>
+                                <el-input v-model="tag.TagName" auto-complete="off" @input="contentChange" ref="tagName" prop="tagName"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row>
                         <el-col :span="22">
                             <el-form-item label="序号" :label-width="formLabelWidth">
-                                <el-input v-model="tag.TagIndex" auto-complete="off" @input="contentChange" ref="tagIndex"></el-input>
+                                <el-input v-model="tag.TagIndex" auto-complete="off" @input="contentChange" ref="tagIndex" prop="tagIndex"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -130,8 +130,8 @@ export default {
                 TagIndex: null,
             },
             tagRules: {
-                TagName: [{required: true, message: '标签不能为空', trigger: 'blur'}],
-                TagIndex: [{required: true, message: '序号不能为空', trigger: 'blur'}],
+                tagName: [{required: true, message: '标签不能为空', trigger: 'blur'}],
+                tagIndex: [{required: true, message: '序号不能为空', trigger: 'blur'}],
             }
         }
     },

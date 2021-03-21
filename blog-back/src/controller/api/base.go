@@ -24,8 +24,8 @@ type ApiContext struct {
 
 	ApiData struct {
 		Version string
-		Data interface{}
-		Err  *goerror.Error
+		Data    interface{}
+		Err     *goerror.Error
 	}
 }
 
@@ -71,3 +71,11 @@ func JumpToApiError(context ctl.ActionContext, args ...interface{}) {
 
 	acontext.SetResponseBody(utils.ApiJson(acontext.Version(), acontext.Data(), acontext.Err()))
 }
+
+func CheckInt64GreaterEqual0(v int64) bool {
+	if v >= 0 {
+		return true
+	}
+	return false
+}
+

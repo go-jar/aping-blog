@@ -19,7 +19,7 @@ func (cc *CategoryController) DeleteAction(context *CategoryContext) {
 		return
 	}
 
-	context.ApiData.Data = map[string]interface{} {
+	context.ApiData.Data = map[string]interface{}{
 		"RequestId": context.TraceId,
 	}
 }
@@ -27,7 +27,7 @@ func (cc *CategoryController) DeleteAction(context *CategoryContext) {
 func (cc *CategoryController) parseDeleteActionParams(context *CategoryContext) (int64, *goerror.Error) {
 	var id int64
 	qs := query.NewQuerySet()
-	qs.Int64Var(&id, "Id", true, errno.ECommonInvalidArg, "invalid Id", query.CheckInt64IsPositive)
+	qs.Int64Var(&id, "Id", true, errno.ECommonInvalidArg, "invalid Id", query.CheckInt64GreaterEqual0)
 
 	if err := qs.Parse(context.QueryValues); err != nil {
 		context.ErrorLog([]byte("CategoryController.parseCreateActionParams"), []byte(err.Error()))

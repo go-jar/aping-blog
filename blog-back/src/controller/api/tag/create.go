@@ -37,7 +37,7 @@ func (tc *TagController) parseCreateActionParams(context *TagContext) (*entity.T
 
 	qs := query.NewQuerySet()
 	qs.StringVar(&tagEntity.TagName, "TagName", true, errno.ECommonInvalidArg, "invalid TagName", query.CheckStringNotEmpty)
-	qs.Int64Var(&tagEntity.TagIndex, "TagIndex", false, errno.ECommonInvalidArg, "invalid TagIndex", tc.CheckInt64GreaterEqual0)
+	qs.Int64Var(&tagEntity.TagIndex, "TagIndex", false, errno.ECommonInvalidArg, "invalid TagIndex", query.CheckInt64GreaterEqual0)
 
 	if err := qs.Parse(context.QueryValues); err != nil {
 		context.ErrorLog([]byte("TagController.parseCreateActionParams"), []byte(err.Error()))

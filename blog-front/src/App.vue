@@ -56,7 +56,8 @@ body{
   font-family: Arial,"STHeiti", Helvetica, sans-serif;
   background: #efefef;
   font-size: 14px;
-  color:#444!important;
+//   color:#444!important;
+  color: #fff;
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
@@ -107,7 +108,7 @@ input[type="text"], input[type="button"], input[type="submit"], input[type="sear
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  width: 100%;
+//   width: 100%;
   overflow-x: hidden;
   -webkit-overflow-x: hidden;
   color: #444;
@@ -120,7 +121,7 @@ h1, h2 {
   font-weight: normal;
 }
 a {
-  color: #444;
+//   color: #fff;
 }
 .container{
     max-width: 80%;
