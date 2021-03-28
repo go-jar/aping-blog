@@ -8,6 +8,11 @@ import (
 )
 
 func (tc *TagController) DeleteAction(context *TagContext) {
+	if err := tc.VerifyToken(context.ApiContext); err != nil {
+		context.ApiData.Err = goerror.New(errno.EUserUnauthorized, err.Error())
+		return
+	}
+
 	id, err := tc.parseDeleteActionParams(context)
 	if err != nil {
 		context.ApiData.Err = err
@@ -27,10 +32,10 @@ func (tc *TagController) DeleteAction(context *TagContext) {
 func (tc *TagController) parseDeleteActionParams(context *TagContext) (int64, *goerror.Error) {
 	var id int64
 	qs := query.NewQuerySet()
-	qs.Int64Var(&id, "Id", true, errno.ECommonInvalidArg, "invalid Id", query.CheckInt64GreaterEqual0)
+	qs.Int64Var(&id, "TagId", true, errno.ECommonInvalidArg, "invalid TagId", query.CheckInt64GreaterEqual0)
 
 	if err := qs.Parse(context.QueryValues); err != nil {
-		context.ErrorLog([]byte("TagController.parseCreateActionParams"), []byte(err.Error()))
+		context.ErrorLog([]byte("TagController.parseDeleteActionParams"), []byte(err.Error()))
 		return -1, err
 	}
 

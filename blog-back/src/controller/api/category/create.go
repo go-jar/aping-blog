@@ -11,6 +11,11 @@ import (
 )
 
 func (cc *CategoryController) CreateAction(context *CategoryContext) {
+	if err := cc.VerifyToken(context.ApiContext); err != nil {
+		context.ApiData.Err = goerror.New(errno.EUserUnauthorized, err.Error())
+		return
+	}
+
 	categoryEntity, e := cc.parseCreateActionParams(context)
 	if e != nil {
 		context.ApiData.Err = e
@@ -24,7 +29,7 @@ func (cc *CategoryController) CreateAction(context *CategoryContext) {
 	}
 
 	context.ApiData.Data = map[string]interface{}{
-		"Id":        ids[0],
+		"CategoryId":        ids[0],
 		"RequestId": context.TraceId,
 	}
 }

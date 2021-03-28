@@ -16,7 +16,7 @@
 				博客已运行：<span v-html='longTime'>{{longTime}}</span><span class="timeJump"></span>
 			</p>
 			<p>
-				© 2020 阿萍. 由 <a href="https://cn.vuejs.org/" target="_blank">Vue</a> 强力驱动. 京ICP备20000257号.
+				© 2021 阿萍. 由 <a href="https://cn.vuejs.org/" target="_blank">Vue</a> 强力驱动. 京ICP备20000257号.
 			</p>
 		</div>
 	</div>
@@ -76,7 +76,7 @@
     /*top:294px;*/
     /*left:0;*/
     /*position: absolute;*/
-    padding: 15px 10px 10px 10px;
+    padding: 10px 10px 10px 10px;
     box-sizing: border-box;
     /*z-index: 1;*/
     width: 100%!important;
@@ -121,5 +121,15 @@
 .timeJump{
     display:inline-block;
 	margin:0 5px;
+}
+
+@media (max-width: 500px) {     
+	.footBack .fcontainer{
+        width: 100%;
+        background: #232323;
+        padding: 15px 10px 10px 10px;
+        box-sizing: border-box;
+        width: 100%!important;
+    }
 }
 </style>

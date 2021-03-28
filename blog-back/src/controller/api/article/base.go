@@ -44,8 +44,8 @@ func (ac *ArticleController) NewActionContext(req *http.Request, respWriter http
 	return ctx
 }
 
-func (ac *ArticleController) parseCreateOrUpdateActionParams(context *ArticleContext, isUpdate bool) (*entity.ArticleEntity, []int64, *goerror.Error) {
-	articleEntity := &entity.ArticleEntity {
+func (ac *ArticleController) parseCreateOrModifyActionParams(context *ArticleContext, isUpdate bool) (*entity.ArticleEntity, []int64, *goerror.Error) {
+	articleEntity := &entity.ArticleEntity{
 		ReadCount:   0,
 		CreatedTime: time.Now(),
 		UpdatedTime: time.Now(),
@@ -54,7 +54,7 @@ func (ac *ArticleController) parseCreateOrUpdateActionParams(context *ArticleCon
 	qs := query.NewQuerySet()
 	tagIds := ""
 	if isUpdate {
-		qs.Int64Var(&articleEntity.Id, "Id", true, errno.ECommonInvalidArg, "invalid Id", query.CheckInt64GreaterEqual0)
+		qs.Int64Var(&articleEntity.Id, "ArticleId", true, errno.ECommonInvalidArg, "invalid Id", query.CheckInt64GreaterEqual0)
 	}
 	qs.StringVar(&articleEntity.Title, "Title", true, errno.ECommonInvalidArg, "invalid Title", query.CheckStringNotEmpty)
 	qs.Int64Var(&articleEntity.CategoryId, "CategoryId", true, errno.ECommonInvalidArg, "invalid CategoryId", query.CheckInt64GreaterEqual0)
@@ -62,7 +62,7 @@ func (ac *ArticleController) parseCreateOrUpdateActionParams(context *ArticleCon
 	qs.StringVar(&tagIds, "TagIds", false, errno.ECommonInvalidArg, "invalid TagIds", query.CheckStringNotEmpty)
 
 	if err := qs.Parse(context.QueryValues); err != nil {
-		context.ErrorLog([]byte("ArticleController.parseCreateOrUpdateActionParams"), []byte(err.Error()))
+		context.ErrorLog([]byte("ArticleController.parseCreateOrModifyActionParams"), []byte(err.Error()))
 		return nil, nil, err
 	}
 

@@ -1,34 +1,32 @@
 <!-- 文章详情模块 -->
 <template>
-    <div class="detailBox tcommonBox" >
+    <div class="detailBox tcommonBox">
         <header>
             <h1 style="padding-top:10px;">
                 {{articleData.Article.Title}}
             </h1>
             <h2>
                 <el-row>
-                    <i class="fa fa-fw fa-user"></i><span >{{formatTime}}</span>&#12288; 
+                    <span class="el-icon-date"> {{formatTime}}</span>&#12288; 
 
-                    <i class="fa fa-fw fa-eye"></i> 
-                    <a :href="'#/category?id='+articleData.Article.CategoryId">{{articleData.Category.CategoryName}}</a>&#12288;
+                    <a :href="'#/category?id='+articleData.Article.CategoryId" class="el-icon-notebook-2"> {{articleData.Category.CategoryName}}</a>&#12288;
 
-                    <i v-for="item in articleData.TagSet" :key="item.Id">
-                        <a :href="'#/tag?id='+item.Id">{{item.TagName}}</a>&#12288;
+                    <i v-for="item in articleData.TagSet" :key="item.TagId">
+                        <a :href="'#/tag?id='+item.TagId" class="el-icon-collection-tag"> {{item.TagName}}</a>&#12288;
                     </i>
 
-                    <i class="fa fa-fw fa-eye"></i> {{articleData.Article.ReadCount}}&#12288;
+                    <i class="el-icon-view"></i> {{articleData.Article.ReadCount}}&#12288;
+                    <span v-show="articleData.RemarkCount>0" class="el-icon-chat-dot-square"> {{articleData.RemarkCount}}&#12288;</span>
 
-                    <a :href="'#/edit-article?id='+articleData.Article.Id" target="_blank">编辑&#12288;</a>
-                    <a :href="'#'" @click="handleDeleteArticle(articleData.Article.Id)">删除&#12288;</a>
+                    <a :href="'#/remark?articleid='+articleData.Article.ArticleId" target="_blank" class="el-icon-edit-outline"> 评论&#12288;</a>
+                    <a :href="'#/edit-article?id='+articleData.Article.ArticleId" target="_blank" v-show="adminLogin" class="el-icon-edit-outline"> 编辑&#12288;</a>
+                    <a :href="'#'" @click="handleDeleteArticle(articleData.Article.ArticleId)" v-show="adminLogin" class="el-icon-remove-outline"> 删除&#12288;</a>
                 
-                    <span style="color: red; margin-right: 0px;">转载请注明出处</span>
+                    <span style="color: red; margin-right: 0px;" class="el-icon-warning-outline"> 转载请注明出处</span>
                 </el-row>
             </h2>
-            <!-- <div class="ui label">
-                <a :href="'#/Share?classId='+articleData.class_id">{{articleData.cate_name}}</a>
-            </div> -->
         </header>
-        <ViewMarkdown :height="750" :content="articleData.Article.Content"></ViewMarkdown>
+        <ViewMarkdown :height="755" :content="articleData.Article.Content"></ViewMarkdown>
         <!-- <div class="article-content" v-html="articleData.Article.Content"></div> -->
         <!-- <div class="donate">
             <div class="donate-word">
@@ -54,7 +52,7 @@
 
 <script>
 import {describeArticles, deleteArticle} from '@/api/article.js'
-import {LoginKey} from '@/const/login'
+import {getToken} from '@/utils/auth.js'
 import ViewMarkdown from '@/components/ViewMarkdown'
 
 export default {
@@ -114,7 +112,7 @@ export default {
         routeChange: function(){
             var that = this;
 
-            if (localStorage.getItem(LoginKey.ACCESS_TOKEN)) {
+            if (getToken()) {
 				that.adminLogin = true;
 			} else {
 				that.adminLogin = false;
@@ -163,6 +161,7 @@ export default {
     word-break: break-all;
     overflow-x: hidden;
     text-align: center;
+    height: 100%;
 }
 .detailBox .article-content p{
     margin:10px 0;

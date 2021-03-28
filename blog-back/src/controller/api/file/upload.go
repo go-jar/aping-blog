@@ -9,6 +9,11 @@ import (
 )
 
 func (fc *FileController) UploadAction(context *FileContext) {
+	if err := fc.VerifyToken(context.ApiContext); err != nil {
+		context.ApiData.Err = goerror.New(errno.EUserUnauthorized, err.Error())
+		return
+	}
+
 	f, e := fc.parseUploadActionParams(context)
 	if e != nil {
 		context.ApiData.Err = e

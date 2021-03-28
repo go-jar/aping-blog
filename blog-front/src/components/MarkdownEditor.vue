@@ -32,7 +32,7 @@ export default {
       const that = this
       const options = {
         cache: {
-          enable: true,
+          enable: false,
         },
         mode: 'ir',
         height: this.height,  // 编辑器总高度
@@ -58,10 +58,11 @@ export default {
         toolbarConfig: {
             pin: false,  // 是否固定工具栏
         },
+        value: this.content == null? "": this.content,
         after: () => {
-          if (this.content) {
-            this.vditor.setValue(this.content)
-          }
+          // if (this.content) {
+          //   this.vditor.setValue(this.content)
+          // }
         },
         upload: {
           url: process.env.WEB_API + '/file/upload',

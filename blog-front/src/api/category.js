@@ -6,6 +6,7 @@ export function createCategory(category) {
         url: process.env.WEB_API + '/category/create',
         method: 'post',
         data: qs.stringify({
+            "Action": "CreateCategory",
             "CategoryName": category.CategoryName,
             "CategoryIndex": category.CategoryIndex,
         })
@@ -17,17 +18,19 @@ export function deleteCategory(categoryId) {
         url: process.env.WEB_API + '/category/delete',
         method: 'post',
         data: qs.stringify({
-            "Id": categoryId,
+            "Action": "DeleteCategory",
+            "CategoryId": categoryId,
         })
     })
 }
 
-export function updateCategory(category) {
+export function modifyCategory(category) {
     return request({
-        url: process.env.WEB_API + '/category/update',
+        url: process.env.WEB_API + '/category/modify',
         method: 'post',
         data: qs.stringify({
-            "Id": category.Id, 
+            "Action": "ModifyCategory",
+            "CategoryId": category.CategoryId, 
             "CategoryName": category.CategoryName,
             "CategoryIndex": category.CategoryIndex,
         })
@@ -38,10 +41,12 @@ export function describeCategories(categoryId, offset, limit) {
     var params;
     if (categoryId != null) {
         params = qs.stringify({
-            "Id": categoryId,
+            "Action": "DescribeCategories",
+            "CategoryId": categoryId,
         })
     } else {
         params = qs.stringify({
+            "Action": "DescribeCategories",
             "Offset": offset,
             "Limit": limit
         })

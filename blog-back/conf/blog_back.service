@@ -1,0 +1,17 @@
+# cp blog_back.service /usr/lib/systemd/system/blog_back.service
+
+[Unit]
+Description=Blog Back End
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+Environment=PATH=/usr/local/lighthouse/softwares/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+WorkingDirectory=/usr/local/lighthouse/softwares/aping-blog/blog-back
+ExecStart=/usr/local/lighthouse/softwares/aping-blog/blog-back/src/run.sh
+
+[Install]
+WantedBy=multi-user.target

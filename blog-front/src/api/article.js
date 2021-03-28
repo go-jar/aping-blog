@@ -1,12 +1,12 @@
 import qs from 'qs';
 import request from '../utils/request'
-import {getToken} from '@/utils/auth'
 
 export function createArticle(article) {
     return request({
         url: process.env.WEB_API + '/article/create',
         method: 'post',
         data: qs.stringify({
+            "Action": "CreateArticle",
             "Title": article.Title,
             "CategoryId": article.CategoryId,
             "Content": article.Content,
@@ -20,17 +20,19 @@ export function deleteArticle(articleId) {
         url: process.env.WEB_API + '/article/delete',
         method: 'post',
         data: qs.stringify({
-            "Id": articleId,
+            "Action": "DeleteArticle",
+            "ArticleId": articleId,
         })
     })
 }
 
-export function updateArticle(article) {
+export function modifyArticle(article) {
     return request({
-        url: process.env.WEB_API + '/article/update',
+        url: process.env.WEB_API + '/article/modify',
         method: 'post',
         data: qs.stringify({
-            "Id": article.Id, 
+            "Action": "ModifyArticle",
+            "ArticleId": article.ArticleId, 
             "Title": article.Title,
             "CategoryId": article.CategoryId,
             "Content": article.Content,
@@ -39,11 +41,12 @@ export function updateArticle(article) {
     })
 }
 
-export function describeArticles(articleId, categoryId, tagId, offset, limit) {
+export function describeArticles(articleId, categoryId, tagId, keyword, offset, limit) {
     var params = new Array();
+    params["Action"] = "DescribeArticles";
 
     if (articleId != null) {
-        params["Id"] = articleId;
+        params["ArticleId"] = articleId;
     } 
     
     if (categoryId != null) {
@@ -62,6 +65,10 @@ export function describeArticles(articleId, categoryId, tagId, offset, limit) {
         params["Limit"] = limit;
     }
     
+    if (keyword != null) {
+        params["Keyword"] = keyword
+    }
+
     return request({
         url: process.env.WEB_API + '/article/describe',
         method: 'post',

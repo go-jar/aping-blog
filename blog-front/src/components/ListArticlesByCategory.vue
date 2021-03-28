@@ -5,7 +5,7 @@
 <el-row>
         <el-col
             v-for="item in this.articleObjs"
-            :key="item.Id"
+            :key="item.ArticleId"
             style="padding: 3px"
         >
 
@@ -19,7 +19,7 @@
                         <el-row style="textAlign: left;">
                             <el-col :span=4>&#12288;</el-col>
                             <el-col :span=9>
-                                <a :href="'#/article?id='+item.Article.Id">
+                                <a :href="'#/article?id='+item.Article.ArticleId">
                                     {{item.Article.Title}}
                                 </a>
                             </el-col>
@@ -28,8 +28,8 @@
                                 <a :href="'#/category?id='+item.Article.CategoryId">
                                     {{item.Category.CategoryName}}
                                 </a>&#12288;
-                                <i v-for="tag in item.TagSet" :key="tag.Id">
-                                    <a :href="'#/tag?id='+tag.Id">{{tag.TagName}}</a>&#12288;
+                                <i v-for="tag in item.TagSet" :key="tag.TagId">
+                                    <a :href="'#/tag?id='+tag.TagId">{{tag.TagName}}</a>&#12288;
                                 </i>
                                 <span >{{item.Article.ReadCount}}</span>
                             </el-col>
@@ -67,9 +67,9 @@ export default {
             formLabelWidth: "120px",
             currentPage: 1,
             total: null,
-            pageSize: 40,
+            pageSize: window.innerWidth <= 700? 8: 13,
             tag: {
-                Id: null,
+                TagId: null,
                 TagName: null,
             },
             categoryId: null,
@@ -129,7 +129,7 @@ export default {
             var offset = (this.currentPage - 1) * this.pageSize;
 
             //获取详情接口
-            describeArticles(null, that.categoryId, null, offset, this.pageSize).then(response => {
+            describeArticles(null, that.categoryId, null, null, offset, this.pageSize).then(response => {
                 if(response.Code == Code.SUCCESS) {
                     this.articleObjs = response.Data.ArticleSet;
                     this.total = response.Data.Total;
@@ -165,5 +165,10 @@ a {
 }
 .in-title {
     padding-top: 12px;
+}
+@media screen and (max-width: 700px) {
+    .title {
+        font-size: 12px;
+    }
 }
 </style>

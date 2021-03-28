@@ -13,21 +13,6 @@ export default {
 </script>
 
 <style lang="less">
-// 原博客主提色
-// @tcolors:#97dffd;//按钮和标签颜色
-// @tcolorm:#64609E;//分类的选中的颜色
-// @tcolord:#48456D;//按钮hover 的颜色
-
-// /***** 粉红色主题****/
-// @tcolors:#97dffd;//按钮和标签颜色
-// @tcolorm:#64609E;//分类的选中的颜色
-// @tcolord:#48456D;//按钮hover 的颜色
-//
-// /******淡黄色主题*****/
-// @tcolors:#97dffd;//按钮和标签颜色
-// @tcolorm:#64609E;//分类的选中的颜色
-// @tcolord:#48456D;//按钮hover 的颜色
-//
 // /****** 淡紫色主题 ****/
 @tcolors:#97dffd;//按钮和标签颜色
 @tcolorm:#64609E;//分类的选中的颜色
@@ -75,10 +60,6 @@ fieldset, img{
 legend{
   display: none
 }
-// address, caption, cite, code, dfn, em, strong, th, var{
-//   font-style:normal;
-//   font-weight:normal
-// }
 ol, ul{
   list-style: none
 }
@@ -163,7 +144,7 @@ a {
     border-radius: 5px;
     // margin-bottom: 40px;
     font-size: 15px;
-    height: 93.3%;
+    height: 94.3%;
     margin-top: 38px;
     opacity: 0.98;
 }
@@ -272,18 +253,11 @@ a {
         display: block;
     }
     .headImgBox{
-        height:450px!important;
-        margin-bottom:-140px!important;
-    }
-    .h-information{
-        display:none;
+        height: 100%;
     }
     .headImgBox .scene{
-        font-size: 50px!important;
-        top:120px;
+        font-size: 30px!important;
     }
-
-
 }
 
 
@@ -329,9 +303,6 @@ a {
 
 }
 @media screen and  (max-width:990px){
-    // .hidden{
-    //     display: none!important;
-    // }
     div.rightlistBox .rs2.fixed{
         position: relative;
         top:0;
@@ -371,6 +342,7 @@ a {
 }
 .el-pagination button:hover{
     color:@tcolord;
+    padding: 10px 5px;
 }
 
 

@@ -7,7 +7,7 @@
             <el-row>
                 <el-col
                     v-for="item in this.categoryObjs"
-                    :key="item.Id"
+                    :key="item.Category.CategoryId"
                     style="padding: 6px"
                     :xs="24"
                     :sm="12"
@@ -23,9 +23,12 @@
                     >
                         <div class="categoryName">
                             <div class="in-title">
-                                <a :href="'#/category?id='+item.Id">
-                                    {{item.CategoryName}}
-                                </a>
+                                <a :href="'#/category?id='+item.Category.CategoryId" style="float: left; margin-left: 20px;">
+                                    {{item.Category.CategoryName}}
+                                </a>&#12288;
+                                <div style="float:right; margin-right: 20px;">
+                                    {{item.ArticleCount}}
+                                </div>
                             </div>
                         </div>
                     </el-card>
@@ -61,9 +64,9 @@ export default {
             formLabelWidth: "120px",
             currentPage: 1,
             total: null,
-            pageSize: 40,
+            pageSize: window.innerWidth <= 700? 8: 40,
             category: {
-                Id: null,
+                CategoryId: null,
                 CategoryName: null,
             },
         }
@@ -127,7 +130,7 @@ export default {
 .content {
   position: relative;
   border-radius: 5px;
-  height: 92.1%;
+  height: 93.1%;
   margin-top: 38px;
   padding-top: 10px;
   background: rgba(230, 244, 249, 0.85);

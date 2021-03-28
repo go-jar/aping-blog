@@ -11,6 +11,11 @@ import (
 )
 
 func (tc *TagController) CreateAction(context *TagContext) {
+	if err := tc.VerifyToken(context.ApiContext); err != nil {
+		context.ApiData.Err = goerror.New(errno.EUserUnauthorized, err.Error())
+		return
+	}
+
 	tagEntity, e := tc.parseCreateActionParams(context)
 	if e != nil {
 		context.ApiData.Err = e
@@ -24,7 +29,7 @@ func (tc *TagController) CreateAction(context *TagContext) {
 	}
 
 	context.ApiData.Data = map[string]interface{}{
-		"Id":        ids[0],
+		"TagId":        ids[0],
 		"RequestId": context.TraceId,
 	}
 }

@@ -66,11 +66,11 @@ func (s *Svc) DeleteByArticleId(articleId int64) error {
 	qb.Delete(s.EntityName).
 		WhereAnd(mysql.NewQueryItem("article_id", mysql.CondEqual, articleId))
 
-	if _, err := s.SqlOrm.Dao().Client.Exec(qb.Query(), qb.Args()...); err != nil {
+	_, err := s.SqlOrm.Dao().Client.Exec(qb.Query(), qb.Args()...)
+	defer s.SqlOrm.PutBackClient()
+	if err != nil {
 		return err
 	}
-
-	defer s.SqlOrm.PutBackClient()
 
 	return nil
 }
@@ -80,11 +80,11 @@ func (s *Svc) DeleteByTagIds(tagIds []int64) error {
 	qb.Delete(s.EntityName).
 		WhereAnd(mysql.NewQueryItem("tag_id", mysql.CondIn, tagIds))
 
-	if _, err := s.SqlOrm.Dao().Client.Exec(qb.Query(), qb.Args()...); err != nil {
+	_, err := s.SqlOrm.Dao().Client.Exec(qb.Query(), qb.Args()...)
+	defer s.SqlOrm.PutBackClient()
+	if err != nil {
 		return err
 	}
-
-	defer s.SqlOrm.PutBackClient()
 
 	return nil
 }
@@ -168,11 +168,35 @@ func (s *Svc) GetTagIdsByArticleId(articleId int64) ([]int64, error) {
 	return tagIds, nil
 }
 
+func (s *Svc) GetByArticleIds(articleIds []int64) (map[int64][]int64, error) {
+	qb := new(mysql.QueryBuilder)
+	qb.Select(s.EntityName, "article_id, tag_id").
+		WhereAnd(mysql.NewQueryItem("article_id", mysql.CondIn, articleIds))
+
+	rows, err := s.SqlOrm.Dao().Client.Query(qb.Query(), qb.Args()...)
+	defer s.SqlOrm.PutBackClient()
+	if err != nil {
+		return nil, err
+	}
+
+	result := map[int64][]int64{}
+	for rows.Next() {
+		var articleId, tagId int64
+		err = rows.Scan(&articleId, &tagId)
+		if err != nil {
+			s.ErrorLog([]byte("ArticleTagSvc.GetByArticleIds"), []byte(err.Error()))
+			return nil, err
+		} else {
+			result[articleId] = append(result[articleId], tagId)
+		}
+	}
+
+	return result, nil
+}
+
 func (s *Svc) GetArticleIdsByTagId(tagId int64) ([]int64, error) {
 	qp := &mysql.QueryParams{
-		ParamsStructPtr: &entity.ArticleTagEntity{
-			TagId: tagId,
-		},
+		ParamsStructPtr: &entity.ArticleTagEntity{TagId: tagId},
 		Required:   map[string]bool{"tag_id": true},
 		Conditions: map[string]string{"tag_id": mysql.CondEqual},
 	}
@@ -187,4 +211,31 @@ func (s *Svc) GetArticleIdsByTagId(tagId int64) ([]int64, error) {
 	}
 
 	return articleIds, nil
+}
+
+func (s *Svc) TotalGroupByTagId() (map[int64]int64, error) {
+	qb := new(mysql.QueryBuilder)
+	qb.Select(s.EntityName, "tag_id, count(*)").
+		GroupBy("tag_id")
+
+	rows, err := s.SqlOrm.Dao().Client.Query(qb.Query(), qb.Args()...)
+	defer s.SqlOrm.PutBackClient()
+	if err != nil {
+		s.ErrorLog([]byte("ArticleTagSvc.TotalGroupByTagId"), []byte(err.Error()))
+		return nil, err
+	}
+
+	result := map[int64]int64{}
+	for rows.Next() {
+		var tagId, articleCount int64
+		err = rows.Scan(&tagId, &articleCount)
+		if err != nil {
+			s.ErrorLog([]byte("ArticleTagSvc.TotalGroupByTagId"), []byte(err.Error()))
+			return nil, err
+		} else {
+			result[tagId] = articleCount
+		}
+	}
+
+	return result, nil
 }

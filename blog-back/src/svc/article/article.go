@@ -91,10 +91,42 @@ func (s *Svc) GetArticles(qp *mysql.QueryParams) ([]*entity.ArticleEntity, int64
 	return entities, total, nil
 }
 
+func (s *Svc) TotalGroupByCategoryId() (map[int64]int64, error) {
+	qb := new(mysql.QueryBuilder)
+	qb.Select(s.EntityName, "category_id, count(*)").
+		GroupBy("category_id")
+
+	rows, err := s.SqlOrm.Dao().Client.Query(qb.Query(), qb.Args()...)
+	defer s.SqlOrm.PutBackClient()
+	if err != nil {
+		s.ErrorLog([]byte("ArticleSvc.TotalGroupByCategoryId"), []byte(err.Error()))
+		return nil, err
+	}
+
+	result := map[int64]int64{}
+	for rows.Next() {
+		var categoryId, articleCount int64
+		err = rows.Scan(&categoryId, &articleCount)
+		if err != nil {
+			s.ErrorLog([]byte("ArticleSvc.TotalGroupByCategoryId"), []byte(err.Error()))
+			return nil, err
+		} else {
+			result[categoryId] = articleCount
+		}
+	}
+
+	return result, nil
+}
+
 func (s *Svc) GetArticlesByIdsLimit(articleIds []int64, offset, limit int64) ([]*entity.ArticleEntity, int64, error) {
 	var entities []*entity.ArticleEntity
 
-	if err := s.SqlOrm.ListByIdsLimit(s.EntityName, articleIds, " id desc ", offset, limit, entity.ArticleEntityType, &entities); err != nil {
+	if articleIds == nil || len(articleIds) == 0 {
+		return entities, 0, nil
+	}
+
+	if err := s.SqlOrm.ListByIdsLimit(s.EntityName, articleIds, "id desc", offset, limit, entity.ArticleEntityType, &entities); err != nil {
+		s.ErrorLog([]byte("ArticleSvc.GetArticlesByIdsLimit"), []byte(err.Error()))
 		return nil, -1, err
 	}
 

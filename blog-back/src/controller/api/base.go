@@ -1,13 +1,17 @@
 package api
 
 import (
+	"errors"
 	"html"
 	"net/http"
 
 	"github.com/go-jar/goerror"
 	ctl "github.com/go-jar/gohttp/controller"
 
+	"blog/conf"
 	"blog/controller"
+	"blog/errno"
+	"blog/svc/user"
 	"blog/utils"
 )
 
@@ -66,6 +70,31 @@ func (bc *BaseController) NewActionContext(req *http.Request, respWriter http.Re
 	return context
 }
 
+func (bc *BaseController) VerifyToken(context *ApiContext) error {
+	token :=  context.Request().Header.Get("X-Token")
+	userClaim, err := utils.ParseToken(token, conf.LoginSecretKey)
+	if err != nil {
+		err = errors.New("login expired")
+		context.ApiData.Err = goerror.New(errno.EUserUnauthorized, err.Error())
+		return err
+	}
+
+	userSvc := user.NewSvc(context.TraceId)
+	user, err := userSvc.GetByUsername(conf.AdminName)
+	if err != nil {
+		context.ApiData.Err = goerror.New(errno.EUserUnauthorized, err.Error())
+		return err
+	}
+
+	if userClaim.Id != user.Id || userClaim.Username != user.Username {
+		err = errors.New("invalid user")
+		context.ApiData.Err = goerror.New(errno.EUserUnauthorized, err.Error())
+		return err
+	}
+
+	return nil
+}
+
 func JumpToApiError(context ctl.ActionContext, args ...interface{}) {
 	acontext := context.(IApiDataContext)
 
@@ -78,4 +107,3 @@ func CheckInt64GreaterEqual0(v int64) bool {
 	}
 	return false
 }
-

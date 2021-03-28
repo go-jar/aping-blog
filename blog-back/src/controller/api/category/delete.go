@@ -8,6 +8,11 @@ import (
 )
 
 func (cc *CategoryController) DeleteAction(context *CategoryContext) {
+	if err := cc.VerifyToken(context.ApiContext); err != nil {
+		context.ApiData.Err = goerror.New(errno.EUserUnauthorized, err.Error())
+		return
+	}
+
 	id, err := cc.parseDeleteActionParams(context)
 	if err != nil {
 		context.ApiData.Err = err
@@ -27,10 +32,10 @@ func (cc *CategoryController) DeleteAction(context *CategoryContext) {
 func (cc *CategoryController) parseDeleteActionParams(context *CategoryContext) (int64, *goerror.Error) {
 	var id int64
 	qs := query.NewQuerySet()
-	qs.Int64Var(&id, "Id", true, errno.ECommonInvalidArg, "invalid Id", query.CheckInt64GreaterEqual0)
+	qs.Int64Var(&id, "CategoryId", true, errno.ECommonInvalidArg, "invalid CategoryId", query.CheckInt64GreaterEqual0)
 
 	if err := qs.Parse(context.QueryValues); err != nil {
-		context.ErrorLog([]byte("CategoryController.parseCreateActionParams"), []byte(err.Error()))
+		context.ErrorLog([]byte("CategoryController.parseDeleteActionParams"), []byte(err.Error()))
 		return -1, err
 	}
 

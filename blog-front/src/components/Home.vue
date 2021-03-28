@@ -1,7 +1,7 @@
 <!-- 头部公用 -->
 <template>
 <div>
-	<div class="headImgBox" :style="{backgroundImage:this.$store.state.themeObj.top_image?'url('+this.$store.state.themeObj.top_image+')':'url(static/img/headbg.jpg)'}">
+	<div class="headImgBox" :style="{backgroundImage:'url(static/img/headbg.jpg)'}">
 		<div class="scene">
 			<div><span id="luke"></span></div>
 		</div>
@@ -40,7 +40,7 @@ export default {
 /*头部背景图*/
 
 .headImgBox {
-	height: 99%;
+	height: 98%;
 	position: relative;
 	width: 100%;
 	background-size: cover;
@@ -53,7 +53,7 @@ export default {
 	width: 70%;
 	margin: auto;
 	position: relative;
-	top: 290px;
+	top: 30%;
 	padding: 40px 0;
 	font-size: 16px;
 	opacity: 0.9;
@@ -67,44 +67,6 @@ export default {
 .articles {
 	margin-top: 20px;
 	color: #fff;
-}
-
-@-webkit-keyframes b {
-	0% {
-		-webkit-transform: translateY(90px);
-		transform: translateY(90px);
-	}
-	80% {
-		-webkit-transform: translateY(5px);
-		transform: translateY(5px)
-	}
-	90% {
-		-webkit-transform: translateY(-5px);
-		transform: translateY(-5px)
-	}
-	to {
-		-webkit-transform: translateY(0);
-		transform: translateY(0)
-	}
-}
-
-@keyframes b {
-	0% {
-		-webkit-transform: translateY(90px);
-		transform: translateY(90px);
-	}
-	80% {
-		-webkit-transform: translateY(5px);
-		transform: translateY(5px)
-	}
-	90% {
-		-webkit-transform: translateY(-5px);
-		transform: translateY(-5px)
-	}
-	to {
-		-webkit-transform: translateY(0);
-		transform: translateY(0)
-	}
 }
 
 .h-information img {
@@ -165,6 +127,44 @@ export default {
 	animation: caret 500ms infinite;
 }
 
+@-webkit-keyframes b {
+	0% {
+		-webkit-transform: translateY(90px);
+		transform: translateY(90px);
+	}
+	80% {
+		-webkit-transform: translateY(5px);
+		transform: translateY(5px)
+	}
+	90% {
+		-webkit-transform: translateY(-5px);
+		transform: translateY(-5px)
+	}
+	to {
+		-webkit-transform: translateY(0);
+		transform: translateY(0)
+	}
+}
+
+@keyframes b {
+	0% {
+		-webkit-transform: translateY(90px);
+		transform: translateY(90px);
+	}
+	80% {
+		-webkit-transform: translateY(5px);
+		transform: translateY(5px)
+	}
+	90% {
+		-webkit-transform: translateY(-5px);
+		transform: translateY(-5px)
+	}
+	to {
+		-webkit-transform: translateY(0);
+		transform: translateY(0)
+	}
+}
+
 @keyframes caret {
 	0%,
 	100% {
@@ -173,5 +173,19 @@ export default {
 	50% {
 		opacity: 0;
 	}
+}
+
+@media screen and (max-width: 700px) {
+    .headImgBox .scene{
+        font-size: 30px!important;
+		top: 50px;
+    }
+    .h-information{
+        width: 100%;
+		top: 20%;
+    }
+    .h-information h2 {
+        font-size: 14px;
+    }
 }
 </style>

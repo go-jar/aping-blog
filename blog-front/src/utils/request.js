@@ -27,7 +27,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data
-    if (res.code != Code.LOGIN_EXPIRED) {
+    if (res.code != Code.EUserUnauthorized) {
       return response.data
     } else {
       MessageBox.confirm(

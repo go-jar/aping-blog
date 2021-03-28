@@ -5,8 +5,8 @@ const (
 	ECommonInvalidArg = "ECommonInvalidArg"
 	ESysMysqlError    = "ESysMysqlError"
 
-	EUserUnauthorized = "EUserUnauthorized"
-	ETCloudCosError = "ETCloudCosError"
-	EParseRequestError = "EParseRequestError"
+	EUserUnauthorized   = "EUserUnauthorized"
+	ETCloudCosError     = "ETCloudCosError"
+	EParseRequestError  = "EParseRequestError"
 	EDecodeRequestError = "EDecodeRequestError"
 )

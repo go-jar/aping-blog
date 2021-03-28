@@ -12,7 +12,7 @@ import (
 type CategoryContext struct {
 	*api.ApiContext
 
-	categorySvc *category.Svc
+	categorySvc   *category.Svc
 }
 
 func (c *CategoryContext) BeforeAction() {

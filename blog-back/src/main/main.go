@@ -1,7 +1,6 @@
 package main
 
 import (
-	"blog/controller/api/file"
 	"flag"
 	"fmt"
 	"net/http"
@@ -18,6 +17,8 @@ import (
 	"blog/conf"
 	"blog/controller/api/article"
 	"blog/controller/api/category"
+	"blog/controller/api/file"
+	"blog/controller/api/remark"
 	"blog/controller/api/tag"
 	"blog/controller/api/user"
 	"blog/errno"
@@ -68,13 +69,14 @@ func main() {
 		os.Exit(errno.ESysSavePidFileFail)
 	}
 
-	r := router.NewSimpleRouter(log.TestLogger)
+	r := router.NewSimpleRouter(log.AccessLogger)
 	r.RegisterRoutes(
 		new(user.UserController),
 		new(category.CategoryController),
 		new(tag.TagController),
 		new(article.ArticleController),
 		new(file.FileController),
+		new(remark.RemarkController),
 	)
 
 	sys := system.NewSystem(r)

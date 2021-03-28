@@ -6,6 +6,7 @@ export function createTag(tag) {
         url: process.env.WEB_API + '/tag/create',
         method: 'post',
         data: qs.stringify({
+            "Action": "CreateTag",
             "TagName": tag.TagName,
             "TagIndex": tag.TagIndex,
         })
@@ -17,17 +18,19 @@ export function deleteTag(tagId) {
         url: process.env.WEB_API + '/tag/delete',
         method: 'post',
         data: qs.stringify({
-            "Id": tagId,
+            "Action": "DeleteTag",
+            "TagId": tagId,
         })
     })
 }
 
-export function updateTag(tag) {
+export function modifyTag(tag) {
     return request({
-        url: process.env.WEB_API + '/tag/update',
+        url: process.env.WEB_API + '/tag/modify',
         method: 'post',
         data: qs.stringify({
-            "Id": tag.Id, 
+            "Action": "ModifyTag",
+            "TagId": tag.TagId, 
             "TagName": tag.TagName,
             "TagIndex": tag.TagIndex,
         })
@@ -38,10 +41,12 @@ export function describeTags(tagId, offset, limit) {
     var params;
     if (tagId != null) {
         params = qs.stringify({
-            "Id": tagId,
+            "Action": "DescribeTags",
+            "TagId": tagId,
         })
     } else {
         params = qs.stringify({
+            "Action": "DescribeTags",
             "Offset": offset,
             "Limit": limit
         })

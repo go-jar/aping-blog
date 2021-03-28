@@ -6,7 +6,7 @@ import (
 )
 
 type ArticleEntity struct {
-	Id          int64     `mysql:"id" redis:"id" json:"Id"`
+	Id          int64     `mysql:"id" redis:"id" json:"ArticleId"`
 	Title       string    `mysql:"title" redis:"title" json:"Title"`
 	CategoryId  int64     `mysql:"category_id" redis:"category_id" json:"CategoryId"`
 	Content     string    `mysql:"content" redis:"content" json:"Content"`
@@ -18,7 +18,8 @@ type ArticleEntity struct {
 var ArticleEntityType = reflect.TypeOf(ArticleEntity{})
 
 type ArticleResultEntity struct {
-	Article  *ArticleEntity  `json:"Article"`
-	Category *CategoryEntity `json:"Category"`
-	TagSet   []*TagEntity    `json:"TagSet"`
+	Article     *ArticleEntity  `json:"Article"`
+	Category    *CategoryEntity `json:"Category"`
+	TagSet      []*TagEntity    `json:"TagSet"`
+	RemarkCount int64           `json:"RemarkCount"`
 }

@@ -54,3 +54,28 @@ CREATE TABLE IF NOT EXISTS `article` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 INSERT INTO id_gen (name, max_id) VALUES ('article', 0);
+
+CREATE TABLE IF NOT EXISTS `article_tag` (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `article_id` bigint(20) NOT NULL DEFAULT 0,
+    `tag_id` bigint(20) NOT NULL DEFAULT 0,
+    `created_time` datetime NOT NULL,
+    `updated_time` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+
+INSERT INTO id_gen (name, max_id) VALUES ('article_tag', 0);
+
+INSERT INTO id_gen (name, max_id) VALUES ('cos', 0);
+
+CREATE TABLE IF NOT EXISTS `remark` (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `article_id` bigint(20) NOT NULL DEFAULT 0,
+    `nickname` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+    `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+    `init_remark_id` bigint(20) NOT NULL DEFAULT 0,
+    `nickname_replied` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+    `created_time` datetime NOT NULL,
+    `updated_time` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+
+INSERT INTO id_gen (name, max_id) VALUES ('remark', 1);

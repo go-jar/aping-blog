@@ -4,7 +4,7 @@
 <el-row>
         <el-col
             v-for="item in this.articleObjs"
-            :key="item.Id"
+            :key="item.ArticleId"
             style="padding: 3px"
         >
 
@@ -16,21 +16,22 @@
                 <div class="title">
                     <div class="in-title">
                         <el-row style="textAlign: left;">
-                            <el-col :span=4>&#12288;</el-col>
-                            <el-col :span=9>
-                                <a :href="'#/article?id='+item.Article.Id">
+                            <el-col :span=2>&#12288;</el-col>
+                            <el-col :span=10>
+                                <a :href="'#/article?id='+item.Article.ArticleId">
                                     {{item.Article.Title}}
                                 </a>
                             </el-col>
-                            <el-col :span=11>
-                                <span >{{formatTime(item.Article.CreatedTime)}}</span>&#12288;
-                                <a :href="'#/category?id='+item.Article.CategoryId">
+                            <el-col :span=12>
+                                <span class="el-icon-date"> {{formatTime(item.Article.CreatedTime)}}</span>&#12288;
+                                <a :href="'#/category?id='+item.Article.CategoryId" class="el-icon-notebook-2">
                                     {{item.Category.CategoryName}}
                                 </a>&#12288;
-                                <i v-for="tag in item.TagSet" :key="tag.Id">
-                                    <a :href="'#/tag?id='+tag.Id">{{tag.TagName}}</a>&#12288;
+                                <i v-for="tag in item.TagSet" :key="tag.TagId">
+                                    <a :href="'#/tag?id='+tag.TagId" class="el-icon-collection-tag"> {{tag.TagName}}</a>&#12288;
                                 </i>
-                                <span >{{item.Article.ReadCount}}</span>
+                                <span class="el-icon-view"> {{item.Article.ReadCount}}</span>&#12288;
+                                <span v-show="item.RemarkCount>0" class="el-icon-chat-dot-square"> {{item.RemarkCount}}</span>
                             </el-col>
                         </el-row>
                     </div>
@@ -40,7 +41,7 @@
     </el-row>
 
     <!-- 分页 -->
-    <div class="block" style="margin: 3px 0 10px 6px;">
+    <div class="block" style="margin: 5px 0 0px 6px;">
         <el-pagination
             @current-change="handleCurrentChange"
             :current-page.sync="currentPage"
@@ -66,9 +67,9 @@ export default {
             formLabelWidth: "120px",
             currentPage: 1,
             total: null,
-            pageSize: 40,
+            pageSize: window.innerWidth <= 700? 3: 5,
             tag: {
-                Id: null,
+                TagId: null,
                 TagName: null,
             },
         }
@@ -141,11 +142,11 @@ export default {
         handleCurrentChange(val) {
             var that = this;
             this.currentPage = val; // 改变当前所指向的页数
-            this.handleListTags();
+            this.handleListArticles();
         },
         handleListArticles: function() {
             var offset = (this.currentPage - 1) * this.pageSize;
-            describeArticles(null, null, null, offset, this.pageSize).then(response => {
+            describeArticles(null, null, null, null, offset, this.pageSize).then(response => {
                 if(response.Code == Code.SUCCESS) {
                     this.articleObjs = response.Data.ArticleSet;
                     this.total = response.Data.Total;
@@ -157,17 +158,8 @@ export default {
 </script>
 
 <style scoped>
-.content {
-  position: relative;
-  border-radius: 5px;
-  height: 92.1%;
-  margin-top: 38px;
-  padding-top: 10px;
-  background: rgba(230, 244, 249, 0.85);
-  opacity: 0.98;
-}
 a {
-  color: #fff; 
+   color: #FFF;
 }
 .title {
     height: 100%;
@@ -181,5 +173,11 @@ a {
 }
 .in-title {
     padding-top: 12px;
+}
+
+@media screen and (max-width: 700px) {
+    .title {
+        font-size: 12px;
+    }
 }
 </style>

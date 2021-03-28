@@ -7,7 +7,7 @@
             <el-row>
                 <el-col
                     v-for="item in this.tagObjs"
-                    :key="item.Id"
+                    :key="item.Tag.TagId"
                     style="padding: 6px"
                     :xs="24"
                     :sm="12"
@@ -23,9 +23,12 @@
                     >
                         <div class="tagName">
                             <div class="in-title">
-                                 <a :href="'#/tag?id='+item.Id">
-                                    {{item.TagName}}
-                                </a>
+                                <a :href="'#/tag?id='+item.Tag.TagId" style="float: left; margin-left: 30px;">
+                                    {{item.Tag.TagName}}
+                                </a>&#12288;
+                                <div style="float:right; margin-right: 30px;">
+                                    {{item.ArticleCount}}
+                                </div>
                             </div>
                         </div>
                     </el-card>
@@ -61,9 +64,9 @@ export default {
             formLabelWidth: "120px",
             currentPage: 1,
             total: null,
-            pageSize: 40,
+            pageSize: window.innerWidth <= 700? 8: 40,
             tag: {
-                Id: null,
+                TagId: null,
                 TagName: null,
             },
         }
@@ -127,7 +130,7 @@ export default {
 .content {
   position: relative;
   border-radius: 5px;
-  height: 92.1%;
+  height: 93.1%;
   margin-top: 38px;
   padding-top: 10px;
   background: rgba(230, 244, 249, 0.85);

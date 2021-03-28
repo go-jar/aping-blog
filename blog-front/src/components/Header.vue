@@ -7,17 +7,17 @@
 				<!-- pc端导航 -->
 				<div class="headBox">
 					<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" :router="true">
-						<el-menu-item index="/home"><i class="fa fa-wa fa-home"></i> 首页</el-menu-item>
-						<el-menu-item index="/list-categories"><i class="fa fa-wa fa-home"></i> 类别</el-menu-item>
-						<el-menu-item index="/list-tags"><i class="fa fa-wa fa-home"></i> 标签</el-menu-item>
-						<el-menu-item index="/about"><i class="fa fa-wa fa-vcard"></i> 关于</el-menu-item>
-						<el-submenu v-show="adminLogin" index="3">
-							<template slot="title"><i class="fa fa-wa fa-archive"></i> 管理</template>
+						<el-menu-item index="/home" class="el-icon-house"> 首页</el-menu-item>
+						<el-menu-item index="/list-categories" class="el-icon-notebook-2"> 类别</el-menu-item>
+						<el-menu-item index="/list-tags" class="el-icon-collection-tag"> 标签</el-menu-item>
+						<el-menu-item index="/about" class="el-icon-user"> 关于</el-menu-item>
+						<el-submenu v-show="adminLogin" index="4">
+							<template slot="title" class="el-icon-s-tools"> 管理</template>
 							<el-menu-item index="/manage-cagegory">类别</el-menu-item>
 							<el-menu-item index="/manage-tag">标签</el-menu-item>
 						</el-submenu>
 						<div class="createArticle">
-							<el-menu-item v-show="adminLogin" index="/edit-article"><i class="fa fa-fw fa-user-circle userImg"></i> 创作</el-menu-item>
+							<el-menu-item v-show="adminLogin" index="/create-article" class="el-icon-edit"><i class="fa fa-fw fa-user-circle userImg"></i> 创作</el-menu-item>
 						</div>
 						<div index="" class="pcsearchbox">
 							<i class="el-icon-search pcsearchicon"></i>
@@ -34,12 +34,10 @@
 						<i @click="pMenu=!pMenu" class="el-icon-menu"></i>
 						<el-collapse-transition>
 							<el-menu :default-active="activeIndex" class="mlistmenu" v-show="!pMenu" theme="dark" @open="handleOpen" @close="handleClose" :unique-opened="true" :router="true">
-								<el-menu-item index="/home"><i class="fa fa-wa fa-home"></i> 首页</el-menu-item>
-								<el-submenu index="/category">
-									<template slot="title"><i class="fa fa-wa fa-archive"></i> 分类</template>
-									<el-menu-item v-for="(item,index) in articleClassListObj" :key="'class1'+index" :index="'/BlogList?classId='+item.class_id">{{item.cate_name}}</el-menu-item>
-								</el-submenu>
-								<el-menu-item index="/about"><i class="fa fa-wa fa-vcard"></i> 关于</el-menu-item>
+								<el-menu-item index="/home"> 首页</el-menu-item>
+								<el-menu-item index="/list-categories"> 类别</el-menu-item>
+								<el-menu-item index="/list-tags"> 标签</el-menu-item>
+								<el-menu-item index="/about"> 关于</el-menu-item>
 							</el-menu>
 						</el-collapse-transition>
 						<div class="searchBox">
@@ -55,19 +53,9 @@
 </template>
 
 <script>
-// import {
-// 	ArticleClassData,
-// } from '../router/server.js'
-import {
-	Typeit
-} from '@/utils/plug'
-import {
-	Const,
-} from '@/const/common'
-import {
-	LoginKey,
-} from '@/const/login'
-
+import {Typeit} from '@/utils/plug'
+import {Const,} from '@/const/common'
+import {getToken} from '@/utils/auth.js'
 export default {
 	data() { //选项 / 数据
 		return {
@@ -100,7 +88,7 @@ export default {
 			 var keyCode = window.event? e.keyCode:e.which;
              if(this.input){
 				 this.$store.state.keywords = this.input;
-                 this.$router.push({path:'/BlogList?keywords='+this.input});
+                 this.$router.push({path:'/articles?keyword='+this.input});
              }
 		},
 		handleSelect(key, keyPath) { // pc 菜单选择
@@ -110,18 +98,11 @@ export default {
 			var that = this;
 			that.pMenu = true
 			this.activeIndex = this.$route.path == '/' ? '/Home' : this.$route.path;
-			if (localStorage.getItem(LoginKey.ACCESS_TOKEN)) { // 存储用户信息
+			if (getToken()) { // 存储用户信息
 				that.adminLogin = true;
-				// console.log("that.adminLogin: ", that.adminLogin);
 			} else {
 				that.adminLogin = false;
 			}
-			// if ((this.$route.name == "BlogList" || this.$route.name == "Home") && this.$store.state.keywords) {
-			// 	this.input = this.$store.state.keywords;
-			// } else {
-			// 	this.input = '';
-			// 	this.$store.state.keywords = '';
-			// }
 		}
 	},
 	components: { // 定义组件
@@ -142,7 +123,7 @@ export default {
 		var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
 		var onVisibilityChange = function() {
 			if (!document[hiddenProperty]) { // 被打开
-				if (localStorage.getItem(LoginKey.ADMAIN_NAME)) {
+				if (getToken()) {
 					that.adminLogin = true;
 				} else {
 					that.adminLogin = false;

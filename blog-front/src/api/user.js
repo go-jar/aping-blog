@@ -7,6 +7,7 @@ export function adminLogin(username, password) {
         url: process.env.WEB_API + '/user/login',
         method: 'post',
         data: qs.stringify({
+            "Action": "AdminLogin",
             "Username": username, 
             "Password": password
         })

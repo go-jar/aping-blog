@@ -6,8 +6,13 @@ import (
 	"blog/errno"
 )
 
-func (ac *ArticleController) UpdateAction(context *ArticleContext) {
-	articleEntity, newTagIds, err := ac.parseCreateOrUpdateActionParams(context, true)
+func (ac *ArticleController) ModifyAction(context *ArticleContext) {
+	if err := ac.VerifyToken(context.ApiContext); err != nil {
+		context.ApiData.Err = goerror.New(errno.EUserUnauthorized, err.Error())
+		return
+	}
+
+	articleEntity, newTagIds, err := ac.parseCreateOrModifyActionParams(context, true)
 	if err != nil {
 		context.ApiData.Err = err
 		return

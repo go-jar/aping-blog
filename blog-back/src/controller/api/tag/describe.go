@@ -7,6 +7,7 @@ import (
 
 	"blog/entity"
 	"blog/errno"
+	"blog/svc/article_tag"
 )
 
 func (tc *TagController) DescribeAction(context *TagContext) {
@@ -22,6 +23,12 @@ func (tc *TagController) DescribeAction(context *TagContext) {
 		return
 	}
 
+	tagSet, e := tc.renderDescribeTags(context, entities)
+	if e != nil {
+		context.ApiData.Err = goerror.New(errno.EInternalError, e.Error())
+		return
+	}
+
 	total, e := context.tagSvc.SimpleTotalAnd(qp)
 	if e != nil {
 		context.ApiData.Err = goerror.New(errno.ESysMysqlError, e.Error())
@@ -29,7 +36,7 @@ func (tc *TagController) DescribeAction(context *TagContext) {
 	}
 
 	context.ApiData.Data = map[string]interface{}{
-		"TagSet":    entities,
+		"TagSet":    tagSet,
 		"Total":     total,
 		"RequestId": context.TraceId,
 	}
@@ -41,9 +48,9 @@ func (tc *TagController) parseDescribeActionParams(context *TagContext) (*mysql.
 	id = -1
 
 	qs := query.NewQuerySet()
-	qs.Int64Var(&qp.Offset, "Offset", false, errno.ECommonInvalidArg, "invalid Offset", tc.CheckInt64GreaterEqual0)
-	qs.Int64Var(&qp.Cnt, "Limit", false, errno.ECommonInvalidArg, "invalid Cnt", tc.CheckInt64GreaterEqual0)
-	qs.Int64Var(&id, "Id", false, errno.ECommonInvalidArg, "invalid Id", tc.CheckInt64GreaterEqual0)
+	qs.Int64Var(&qp.Offset, "Offset", false, errno.ECommonInvalidArg, "invalid Offset", query.CheckInt64GreaterEqual0)
+	qs.Int64Var(&qp.Cnt, "Limit", false, errno.ECommonInvalidArg, "invalid Cnt", query.CheckInt64GreaterEqual0)
+	qs.Int64Var(&id, "TagId", false, errno.ECommonInvalidArg, "invalid TagId", query.CheckInt64GreaterEqual0)
 
 	if err := qs.Parse(context.QueryValues); err != nil {
 		context.ErrorLog([]byte("TagController.parseDescribeActionParams"), []byte(err.Error()))
@@ -55,13 +62,31 @@ func (tc *TagController) parseDescribeActionParams(context *TagContext) (*mysql.
 		qp.Required = map[string]bool{"id": true}
 		qp.Conditions = map[string]string{"id": mysql.CondEqual}
 	}
-	
+
 	return qp, nil
 }
 
-func (tc *TagController) CheckInt64GreaterEqual0(v int64) bool {
-	if v >= 0 {
-		return true
+func (tc *TagController) renderDescribeTags(context *TagContext, tags []*entity.TagEntity) ([]*entity.TagResultEntity, error) {
+	articleTagSvc := article_tag.NewSvc(context.TraceId)
+	m, err := articleTagSvc.TotalGroupByTagId()
+	if err != nil {
+		return nil, err
 	}
-	return false
+
+	var tagSet []*entity.TagResultEntity
+	for _, tag := range tags {
+		if _, ok := m[tag.Id]; ok {
+			tagSet = append(tagSet, &entity.TagResultEntity{
+				Tag:          tag,
+				ArticleCount: m[tag.Id],
+			})
+		} else {
+			tagSet = append(tagSet, &entity.TagResultEntity{
+				Tag:          tag,
+				ArticleCount: 0,
+			})
+		}
+	}
+
+	return tagSet, nil
 }

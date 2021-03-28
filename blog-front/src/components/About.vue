@@ -4,7 +4,7 @@
         <div class="container">
             <div class="about">
                 <section>
-                    <p class="">
+                    <p>
                         <img :src="this.$store.state.aboutmeObj.image?this.$store.state.aboutmeObj.image:'static/img/logo.png'" alt="" onerror="this.onerror=null;this.src= 'static/img/maoto.png'" class="aboutmeImg">
                     </p>
                     <div class='content'>
@@ -13,7 +13,7 @@
                         </h2>
                         <br/>
                         <h4>
-                            本站建于 2020 年 12 月 07 日
+                            本站建于 2021 年 03 月 26 日
                         </h4>
                         <h3>
                             要有最朴素的生活，与最遥远的梦想，即使明日天寒地冻，路远马亡 --- 七堇年
@@ -64,7 +64,7 @@
     background: rgba(230, 244, 249, 0.85);
     border-radius: 5px;
     font-size: 15px;
-    height: 93.3%;
+    height: 94.3%;
     margin-top: 38px;
     opacity: 0.98;
     text-align: center;
@@ -102,5 +102,30 @@
 }
 .about p b{
     font-weight: bold;
+}
+
+@media screen and (max-width: 700px) {
+    .aboutmeImg{
+        max-width:25%;
+        margin-top: 25px;
+    }
+    .about{
+        font-size: 13px;
+    }
+    .about h2{
+        font-size: 30px;
+        font-weight: 500;
+         margin-top: 30px;
+    }
+    .about h3{
+        font-size: 15px;
+        font-weight: 400;
+        margin-top: 30px;
+    }
+    .about h4{
+        font-size: 14px;
+        font-weight: 300;
+        margin-top: 30px;
+    }
 }
 </style>

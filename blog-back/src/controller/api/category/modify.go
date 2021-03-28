@@ -8,8 +8,13 @@ import (
 	"blog/errno"
 )
 
-func (cc *CategoryController) UpdateAction(context *CategoryContext) {
-	categoryEntity, err := cc.parseUpdateActionParams(context)
+func (cc *CategoryController) ModifyAction(context *CategoryContext) {
+	if err := cc.VerifyToken(context.ApiContext); err != nil {
+		context.ApiData.Err = goerror.New(errno.EUserUnauthorized, err.Error())
+		return
+	}
+
+	categoryEntity, err := cc.parseModifyActionParams(context)
 	if err != nil {
 		context.ApiData.Err = err
 		return
@@ -29,16 +34,16 @@ func (cc *CategoryController) UpdateAction(context *CategoryContext) {
 	}
 }
 
-func (cc *CategoryController) parseUpdateActionParams(context *CategoryContext) (*entity.CategoryEntity, *goerror.Error) {
+func (cc *CategoryController) parseModifyActionParams(context *CategoryContext) (*entity.CategoryEntity, *goerror.Error) {
 	categoryEntity := &entity.CategoryEntity{}
 
 	qs := query.NewQuerySet()
-	qs.Int64Var(&categoryEntity.Id, "Id", true, errno.ECommonInvalidArg, "invalid Id", query.CheckInt64GreaterEqual0)
+	qs.Int64Var(&categoryEntity.Id, "CategoryId", true, errno.ECommonInvalidArg, "invalid CategoryId", query.CheckInt64GreaterEqual0)
 	qs.StringVar(&categoryEntity.CategoryName, "CategoryName", true, errno.ECommonInvalidArg, "invalid CategoryName", query.CheckStringNotEmpty)
 	qs.Int64Var(&categoryEntity.CategoryIndex, "CategoryIndex", false, errno.ECommonInvalidArg, "invalid CategoryIndex", query.CheckInt64GreaterEqual0)
 
 	if err := qs.Parse(context.QueryValues); err != nil {
-		context.ErrorLog([]byte("CategoryController.parseCreateActionParams"), []byte(err.Error()))
+		context.ErrorLog([]byte("CategoryController.parseModifyActionParams"), []byte(err.Error()))
 		return nil, err
 	}
 

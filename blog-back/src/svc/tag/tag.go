@@ -1,15 +1,13 @@
 package tag
 
 import (
-	"github.com/go-jar/mysql"
-	"github.com/go-jar/redis"
-	"github.com/go-jar/sqlredis"
-	"reflect"
-
 	"blog/conf"
 	"blog/entity"
 	"blog/resource"
 	"blog/svc"
+	"github.com/go-jar/mysql"
+	"github.com/go-jar/redis"
+	"github.com/go-jar/sqlredis"
 )
 
 const (
@@ -74,15 +72,20 @@ func (s *Svc) UpdateById(id int64, newEntity *entity.TagEntity, updateFields map
 	return setItems != nil, err
 }
 
-func (s *Svc) GetByIds(ids []int64) ([]*entity.TagEntity, error) {
-	var data []*entity.TagEntity
-	tagEntityType := reflect.TypeOf(entity.TagEntity{})
-
-	if err := s.SqlOrm.ListByIds(s.EntityName, ids, "", tagEntityType, &data); err != nil {
+func (s *Svc) GetAll() (map[int64]*entity.TagEntity, error) {
+	qp := &mysql.QueryParams{}
+	tags, err := s.SimpleQueryAnd(qp)
+	if err != nil {
+		s.ErrorLog([]byte("TagSvc.GetAll"), []byte(err.Error()))
 		return nil, err
-	} else {
-		return data, nil
 	}
+
+	result := map[int64]*entity.TagEntity{}
+	for _, tag := range tags {
+		result[tag.Id] = tag
+	}
+
+	return result, nil
 }
 
 func (s *Svc) SimpleQueryAnd(qp *mysql.QueryParams) ([]*entity.TagEntity, error) {
@@ -90,7 +93,7 @@ func (s *Svc) SimpleQueryAnd(qp *mysql.QueryParams) ([]*entity.TagEntity, error)
 
 	err := s.SqlOrm.SimpleQueryAnd(s.EntityName, qp, entity.TagEntityType, &entities)
 	if err != nil {
-		s.ErrorLog([]byte("TagSvc.SimpleQueryAnd"), []byte(err.Error()))
+		s.ErrorLog([]byte("TagSvc.GetArticles"), []byte(err.Error()))
 		return nil, err
 	}
 

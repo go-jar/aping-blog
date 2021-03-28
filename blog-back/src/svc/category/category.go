@@ -74,19 +74,21 @@ func (s *Svc) UpdateById(id int64, newEntity *entity.CategoryEntity, updateField
 	return setItems != nil, err
 }
 
-func (s *Svc) GetById(id int64) (*entity.CategoryEntity, error) {
-	category := new(entity.CategoryEntity)
-
-	find, err := s.SqlRedis.GetById(s.EntityName, s.EntityName, s.RedisKeyPrefix, id, CacheExpireSeconds, category)
+func (s *Svc) GetAll() (map[int64]*entity.CategoryEntity, error) {
+	var categories []*entity.CategoryEntity
+	qp := &mysql.QueryParams{Offset: 0, Cnt: 100000}
+	err := s.SqlOrm.SimpleQueryAnd(s.EntityName, qp, entity.CategoryEntityType, &categories)
 	if err != nil {
-		s.ErrorLog([]byte("CategorySvc.GetById"), []byte(err.Error()))
+		s.ErrorLog([]byte("CategorySvc.GetAll"), []byte(err.Error()))
+		return nil, err
 	}
 
-	if !find {
-		return nil, nil
+	result := map[int64]*entity.CategoryEntity{}
+	for _, category := range categories {
+		result[category.Id] = category
 	}
 
-	return category, nil
+	return result, nil
 }
 
 func (s *Svc) SimpleQueryAnd(qp *mysql.QueryParams) ([]*entity.CategoryEntity, error) {

@@ -11,38 +11,35 @@
             <el-row>
                 <el-col
                     v-for="item in this.tagObjs"
-                    :key="item.Id"
+                    :key="item.Tag.TagId"
                     style="padding: 6px"
                     :xs="24"
-                    :sm="12"
+                    :sm="52"
                     :md="12"
-                    :lg="6"
+                    :lg="66"
                     :xl="4"
                 >
 
                     <el-card
-                        :body-style="{padding: '0px', textAlign: 'right'}"
+                        :body-style="{height: '35px', padding: '0px', textAlign: 'right'}"
                         style="position: relative"
                         shadow="always"
                     >
-                        <div class="TagName">{{item.TagName}}</div>
+                        <div class="TagName">
+                            <a :href="'#/tag?id='+item.Tag.TagId" style="float: left; margin-left: 30px; color: #fff;">
+                                {{item.Tag.TagName}}
+                            </a>&#12288;
+                            <div style="float:right; margin-right: 20px;">{{item.ArticleCount}}</div>
+                        </div>
                        
-                        <div style="height: 25px; margin-top: 14px; margin-right: 6px">
+                        <div style="height: 25px; margin-top: 5px; margin-right: 6px">
                             <el-button-group>
-                                <el-tooltip class="item" effect="dark" content="标签" placement="bottom-start" style="margin-right: 2px">
-                                    <el-button
-                                        size="mini"
-                                        icon="el-icon-copy-document"
-                                        @click="handleListArticles(item)"
-                                    />`
-                                    </el-tooltip>
-
                                 <el-tooltip class="item" effect="dark" content="编辑" placement="bottom-start" style="margin-right: 2px">
                                     <el-button
                                         type="primary"
                                         size="mini"
                                         icon="el-icon-document-copy"
-                                        @click="handleUpdateTag(item)"
+                                        @click="handleUpdateTag(item.Tag)"
                                     >
                                     </el-button>
                                 </el-tooltip>
@@ -52,7 +49,7 @@
                                         type="danger"
                                         size="mini"
                                         icon="el-icon-delete"
-                                        @click="handleDeleteTag(item)"
+                                        @click="handleDeleteTag(item.Tag)"
                                     />
                                 </el-tooltip>
                             </el-button-group>
@@ -107,7 +104,7 @@
 </template>
 
 <script>
-import {createTag, deleteTag, updateTag, describeTags} from "@/api/tag";
+import {createTag, deleteTag, modifyTag, describeTags} from "@/api/tag";
 import {Code} from '@/const/code.js'
 import {message} from '@/utils/common'
 
@@ -125,7 +122,7 @@ export default {
             total: null,
             pageSize: 40,
             tag: {
-                Id: null,
+                TagId: null,
                 TagName: null,
                 TagIndex: null,
             },
@@ -178,7 +175,7 @@ export default {
             that.isUpdateTag = false;
 
             if (that.tag != null && that.tag.TagName != null && that.tag.TagName != "") {
-                if (that.tag.Id) {
+                if (that.tag.TagId) {
                     that.isUpdateTag = true;
                 } else {
                     that.isUpdateTag = false;
@@ -190,7 +187,7 @@ export default {
         },
         getInitTagObject: function() {
             var tagObject = {
-                Id: null,
+                TagId: null,
                 TagName: null,
                 TagIndex: null,
             };
@@ -204,7 +201,7 @@ export default {
                 type: "warning"
             })
             .then(() => {
-                deleteTag(row.Id).then(response => {
+                deleteTag(row.TagId).then(response => {
                     if (response.Code == Code.SUCCESS) {
                         message.success(response.message)
                     } else {
@@ -248,7 +245,7 @@ export default {
                 }
                 
                 if (this.isUpdateTag) {
-                    updateTag(this.tag).then(response => {
+                    modifyTag(this.tag).then(response => {
                         if (response.Code == Code.SUCCESS) {
                             message.success(response.Message)
                             this.dialogVisible = false;
@@ -289,13 +286,12 @@ export default {
     left: 10px;
     top: 6px;
     z-index: 2;
-    /*top: 15px;*/
     background: rgba(58, 59, 59, 0.85);
     color: #FFF;
     padding: 3px 8px;
-    font-size: 14px;
+    font-size: 15px;
     border-radius: 3px;
-    width: 70%;
+    width: 75%;
     text-align: center;
 }
 </style>
