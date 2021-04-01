@@ -42,7 +42,7 @@
             </div>
 
             <!-- 添加或修改对话框 -->
-            <el-dialog :title="title" :visible.sync="dialogVisible" :before-close="closeDialog" fullscreen>
+            <el-dialog :title="title" :visible.sync="dialogVisible" :before-close="closeDialog">
                 <el-form :model="category" :rules="categoryRules" ref="category">
                     <el-row>
                         <el-col :span="22">
@@ -59,10 +59,12 @@
                         </el-col>
                     </el-row>
 
-                    <el-form-item style="float: right; margin-right: 66px;">
-                        <el-button @click="dialogVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="submitCategory">确 定</el-button>
-                    </el-form-item>
+                    <div style="float:bottome; margin-bottom:15px;"> 
+                        <el-form-item style="float: right; margin-right: 66px;">
+                            <el-button @click="dialogVisible = false">取 消</el-button>
+                            <el-button type="primary" @click="submitCategory">确 定</el-button>
+                        </el-form-item>
+                    </div>
                 </el-form>
             </el-dialog>
         </div>

@@ -64,7 +64,7 @@ export default {
             formLabelWidth: "120px",
             currentPage: 1,
             total: null,
-            pageSize: window.innerWidth <= 700? 8: 40,
+            pageSize: window.innerWidth <= 700? 8: 12,
             category: {
                 CategoryId: null,
                 CategoryName: null,

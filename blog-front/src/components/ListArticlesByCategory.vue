@@ -17,21 +17,22 @@
                 <div class="title">
                     <div class="in-title">
                         <el-row style="textAlign: left;">
-                            <el-col :span=4>&#12288;</el-col>
-                            <el-col :span=9>
+                            <el-col :span=1>&#12288;</el-col>
+                            <el-col :span=10>
                                 <a :href="'#/article?id='+item.Article.ArticleId">
                                     {{item.Article.Title}}
                                 </a>
                             </el-col>
-                            <el-col :span=11>
-                                <span >{{formatTime(item.Article.CreatedTime)}}</span>&#12288;
-                                <a :href="'#/category?id='+item.Article.CategoryId">
+                            <el-col :span=13>
+                                <span class="el-icon-date"> {{formatTime(item.Article.CreatedTime)}}</span>&#12288;
+                                <a :href="'#/category?id='+item.Article.CategoryId" class="el-icon-notebook-2">
                                     {{item.Category.CategoryName}}
                                 </a>&#12288;
                                 <i v-for="tag in item.TagSet" :key="tag.TagId">
-                                    <a :href="'#/tag?id='+tag.TagId">{{tag.TagName}}</a>&#12288;
+                                    <a :href="'#/tag?id='+tag.TagId" class="el-icon-collection-tag"> {{tag.TagName}}</a>&#12288;
                                 </i>
-                                <span >{{item.Article.ReadCount}}</span>
+                                <span class="el-icon-view"> {{item.Article.ReadCount}}</span>&#12288;
+                                <span v-show="item.RemarkCount>0" class="el-icon-chat-dot-square"> {{item.RemarkCount}}</span>
                             </el-col>
                         </el-row>
                     </div>
@@ -144,7 +145,7 @@ export default {
 .content {
   position: relative;
   border-radius: 5px;
-  height: 92.1%;
+  height: 93.1%;
   margin-top: 38px;
   padding-top: 10px;
   background: rgba(230, 244, 249, 0.85);
@@ -158,7 +159,7 @@ a {
     z-index: 2;
     background: rgba(58, 59, 59);
     color: #FFF;
-    font-size: 16px;
+    font-size: 15px;
     border-radius: 3px;
     width: 100%;
     text-align: center;

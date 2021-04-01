@@ -74,7 +74,6 @@
                 :title="title"
                 :visible.sync="dialogVisible"
                 :before-close="closeDialog"
-                fullscreen
             >
                 <el-form :model="tag" :rules="tagRules" ref="tag">
                     <el-row>
@@ -92,10 +91,12 @@
                         </el-col>
                     </el-row>
 
-                    <el-form-item style="float: right; margin-right: 66px;">
-                        <el-button @click="dialogVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="submitTag">确 定</el-button>
-                    </el-form-item>
+                    <div style="float:bottome; margin-bottom:15px;"> 
+                        <el-form-item style="float: right; margin-right: 66px;">
+                            <el-button @click="dialogVisible = false">取 消</el-button>
+                            <el-button type="primary" @click="submitTag">确 定</el-button>
+                        </el-form-item>
+                    </div>
                 </el-form>
             </el-dialog>
         </div>
