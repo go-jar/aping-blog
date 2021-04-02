@@ -1,6 +1,7 @@
 package resource
 
 import (
+	"blog/resource/log"
 	"github.com/go-jar/mysql"
 
 	"blog/conf"
@@ -22,5 +23,5 @@ func NewMysqlClient() (*mysql.Client, error) {
 	config.ReadTimeout = conf.MysqlConf.RWTimeout
 	config.WriteTimeout = conf.MysqlConf.RWTimeout
 
-	return mysql.NewClient(config, nil)
+	return mysql.NewClient(config, log.TraceLogger)
 }

@@ -39,7 +39,7 @@
                 <el-row>
                     <el-col :span="24">
                         <el-form-item prop="Content">
-                            <MarkdownEditor ref="editor" :height="700" :content="article.Content" @handleContentChange="handleContentChange"></MarkdownEditor>
+                            <MarkdownEditor ref="editor" :height="725" :content="article.Content" @handleContentChange="handleContentChange"></MarkdownEditor>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -237,7 +237,7 @@ export default {
 .content {
     position: relative;
     border-radius: 5px;
-    height: 92.1%;
+    height: 93.1%;
     margin-top: 38px;
     padding-top: 10px;
     background: rgba(230, 244, 249, 0.85);

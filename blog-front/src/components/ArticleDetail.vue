@@ -20,13 +20,14 @@
 
                     <a :href="'#/remark?articleid='+articleData.Article.ArticleId" target="_blank" class="el-icon-edit-outline"> 评论&#12288;</a>
                     <a :href="'#/edit-article?id='+articleData.Article.ArticleId" target="_blank" v-show="adminLogin" class="el-icon-edit-outline"> 编辑&#12288;</a>
-                    <a :href="'#'" @click="handleDeleteArticle(articleData.Article.ArticleId)" v-show="adminLogin" class="el-icon-remove-outline"> 删除&#12288;</a>
-                
+                    <!-- <a :href="'#'" @click="handleDeleteArticle(articleData.Article.ArticleId)" v-show="adminLogin" class="el-icon-remove-outline"> 删除&#12288;</a> -->
+                    <el-link v-show="adminLogin" type="danger" size="mini" icon="el-icon-delete" @click="handleDeleteArticle(articleData.Article.ArticleId)"
+                    />&#12288;
                     <span style="color: red; margin-right: 0px;" class="el-icon-warning-outline"> 转载请注明出处</span>
                 </el-row>
             </h2>
         </header>
-        <ViewMarkdown :height="755" :content="articleData.Article.Content"></ViewMarkdown>
+        <ViewMarkdown :height="780" :content="articleData.Article.Content"></ViewMarkdown>
         <!-- <div class="article-content" v-html="articleData.Article.Content"></div> -->
         <!-- <div class="donate">
             <div class="donate-word">
@@ -127,12 +128,12 @@ export default {
         },
         handleDeleteArticle: function(articleId) {
             var that = this;
+
             this.$confirm("此操作将把本文删除, 是否继续?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
-            })
-            .then(() => {
+            }).then(() => {
                 deleteArticle(articleId).then(response => {
                     if (response.Code == Code.SUCCESS) {
                         message.success(response.message)
@@ -144,8 +145,7 @@ export default {
                 that.$router.push({
                     path: '/'
                 });
-            })
-            .catch(() => {
+            }).catch(() => {
                 message.info("已取消删除")
             });
         },

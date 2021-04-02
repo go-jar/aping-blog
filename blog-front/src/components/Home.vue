@@ -40,7 +40,7 @@ export default {
 /*头部背景图*/
 
 .headImgBox {
-	height: 98%;
+	height: 98.3%;
 	position: relative;
 	width: 100%;
 	background-size: cover;

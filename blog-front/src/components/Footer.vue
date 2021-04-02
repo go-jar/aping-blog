@@ -1,24 +1,14 @@
 <!-- 底部公用 -->
 <template>
 	<div class='footBack'>
-		<div v-if="this.$store.state.themeObj.user_start!=0" class="footBack footBackQian">
-			<div class="fcontainer">
-				<p>
-					博客已运行：<span v-html='longTime'>{{longTime}}</span><span class="timeJump"></span>
-				</p>
-				<p>
-					© 2020 阿萍. 由 <a href="https://cn.vuejs.org/" target="_blank">Vue</a> 强力驱动. 京ICP备20000257号.
-				</p>
-			</div>
-		</div>
-		<div v-else class="footBack footBackHui">
-			<p>
-				博客已运行：<span v-html='longTime'>{{longTime}}</span><span class="timeJump"></span>
-			</p>
-			<p>
-				© 2021 阿萍. 由 <a href="https://cn.vuejs.org/" target="_blank">Vue</a> 强力驱动. 京ICP备20000257号.
-			</p>
-		</div>
+		<div class="fcontainer">
+            <p>
+                © {{formatTime()}} 阿萍. 由 <a href="https://cn.vuejs.org/" target="_blank">Vue</a> 强力驱动. 京ICP备20000257号.
+            </p>
+            <p>
+                博客已运行：<span v-html='longTime'>{{longTime}}</span><span class="timeJump"></span>
+            </p>
+        </div>
 	</div>
 </template>
 
@@ -43,7 +33,12 @@
                     var seconds = parseInt(longTime / 1000 % 60, 10);
                     that.longTime = days + "天" + hours + "小时" + minutes + "分" + seconds + "秒";
                 }, 1000)
-            }
+            },
+            // 对时间进行格式化
+            formatTime: function() {
+                const dt = new Date()
+                return dt.format("yyyy");
+            },
         },
         components: { // 定义组件
 
@@ -52,6 +47,27 @@
             // 替换底部图片
             var that = this;
             that.runTime();
+
+            Date.prototype.format = function(fmt) { 
+                var o = { 
+                    "M+" : this.getMonth()+1,                 //月份 
+                    "d+" : this.getDate(),                    //日 
+                    "h+" : this.getHours(),                   //小时 
+                    "m+" : this.getMinutes(),                 //分 
+                    "s+" : this.getSeconds(),                 //秒 
+                    "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+                    "S"  : this.getMilliseconds()             //毫秒 
+                }; 
+                if(/(y+)/.test(fmt)) {
+                        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+                }
+                for(var k in o) {
+                    if(new RegExp("("+ k +")").test(fmt)){
+                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+                    }
+                }
+                return fmt; 
+            }
         }
     }
 </script>

@@ -260,7 +260,7 @@ export default {
 .content {
     position: relative;
     border-radius: 5px;
-    height: 92.1%;
+    height: 93.1%;
     margin-top: 38px;
     padding-top: 10px;
     background: rgba(230, 244, 249, 0.85);

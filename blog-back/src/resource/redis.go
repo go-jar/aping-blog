@@ -1,6 +1,7 @@
 package resource
 
 import (
+	"blog/resource/log"
 	"github.com/go-jar/redis"
 
 	"blog/conf"
@@ -27,6 +28,6 @@ func NewRedisClientFunc(rconf *conf.RedisConf) func() (*redis.Client, error) {
 		config.ReadTimeout = rconf.RWTimeout
 		config.WriteTimeout = rconf.RWTimeout
 
-		return redis.NewClient(config, nil), nil
+		return redis.NewClient(config, log.TraceLogger), nil
 	}
 }

@@ -2,16 +2,20 @@ import qs from 'qs';
 import request from '../utils/request'
 
 export function createArticle(article) {
+    var params = new Array();
+    params["Action"] = "CreateArticle"
+    params["Title"] = article.Title
+    params["CategoryId"] = article.CategoryId
+    params["Content"] = article.Content
+    
+    if (article.TagIds != null && article.TagIds != "") {
+        params["TagIds"] = article.TagIds
+    }
+
     return request({
         url: process.env.WEB_API + '/article/create',
         method: 'post',
-        data: qs.stringify({
-            "Action": "CreateArticle",
-            "Title": article.Title,
-            "CategoryId": article.CategoryId,
-            "Content": article.Content,
-            "TagIds": article.TagIds,
-        })
+        data: qs.stringify(params)
     })
 }
 
@@ -27,17 +31,21 @@ export function deleteArticle(articleId) {
 }
 
 export function modifyArticle(article) {
+    var params = new Array();
+    params["Action"] = "ModifyArticle"
+    params["ArticleId"] = article.ArticleId
+    params["Title"] = article.Title
+    params["CategoryId"] = article.CategoryId
+    params["Content"] = article.Content
+    
+    if (article.TagIds != null && article.TagIds != "") {
+        params["TagIds"] = article.TagIds
+    }
+    
     return request({
         url: process.env.WEB_API + '/article/modify',
         method: 'post',
-        data: qs.stringify({
-            "Action": "ModifyArticle",
-            "ArticleId": article.ArticleId, 
-            "Title": article.Title,
-            "CategoryId": article.CategoryId,
-            "Content": article.Content,
-            "TagIds": article.TagIds,
-        })
+        data: qs.stringify(params)
     })
 }
 

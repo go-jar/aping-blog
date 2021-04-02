@@ -39,7 +39,7 @@
                 <el-row>
                     <el-col :span="24">
                         <el-form-item prop="Content">
-                            <MarkdownEditor ref="editor" :height="708" :content="article.Article.Content"></MarkdownEditor>
+                            <MarkdownEditor ref="editor" :height="730" :content="article.Article.Content"></MarkdownEditor>
                         </el-form-item>
                     </el-col>
                 </el-row>

@@ -28,9 +28,11 @@ func (ac *ArticleController) ModifyAction(context *ArticleContext) {
 		return
 	}
 
-	if err := context.articleTagSvc.UpdateArticleTags(articleEntity.Id, newTagIds); err != nil {
-		context.ApiData.Err = goerror.New(errno.ESysMysqlError, err.Error())
-		return
+	if newTagIds != nil && len(newTagIds) > 0 {
+		if err := context.articleTagSvc.UpdateArticleTags(articleEntity.Id, newTagIds); err != nil {
+			context.ApiData.Err = goerror.New(errno.ESysMysqlError, err.Error())
+			return
+		}
 	}
 
 	context.ApiData.Data = map[string]interface{}{

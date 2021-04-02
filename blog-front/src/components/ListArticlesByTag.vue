@@ -46,6 +46,7 @@
         <el-pagination
             @current-change="handleCurrentChange"
             :current-page.sync="currentPage"
+            :pager-count="pagerCount"
             :page-size="pageSize"
             layout="total, prev, pager, next, jumper"
             :total="total">
@@ -68,6 +69,7 @@ export default {
             formLabelWidth: "120px",
             currentPage: 1,
             total: null,
+            pagerCount: window.innerWidth <= 700? 2: 10,
             pageSize: window.innerWidth <= 700? 8: 12,
             tag: {
                 TagId: null,
