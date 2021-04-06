@@ -24,7 +24,7 @@ func (rc *RemarkController) DescribeAction(context *RemarkContext) {
 	}
 
 	remarkSet, e := rc.renderDescribeRemarks(context.remarkSvc, entities, context.TraceId)
-	if err != nil {
+	if e != nil {
 		context.ApiData.Err = goerror.New(errno.ESysMysqlError, e.Error())
 		return
 	}
@@ -42,7 +42,7 @@ func (rc *RemarkController) parseDescribeActionParams(context *RemarkContext) (*
 	articleId = -1
 
 	qs := query.NewQuerySet()
-	qs.Int64Var(&articleId, "ArticleId", true, errno.ECommonInvalidArg, "invalid ArticleId", query.CheckInt64GreaterEqual0)
+	qs.Int64Var(&articleId, "ArticleId", false, errno.ECommonInvalidArg, "invalid ArticleId", query.CheckInt64GreaterEqual0)
 	qs.Int64Var(&qp.Offset, "Offset", false, errno.ECommonInvalidArg, "invalid Offset", query.CheckInt64GreaterEqual0)
 	qs.Int64Var(&qp.Cnt, "Limit", false, errno.ECommonInvalidArg, "invalid Cnt", query.CheckInt64GreaterEqual0)
 
@@ -51,9 +51,11 @@ func (rc *RemarkController) parseDescribeActionParams(context *RemarkContext) (*
 		return nil, err
 	}
 
-	qp.ParamsStructPtr = &entity.RemarkEntity{ArticleId: articleId}
-	qp.Required = map[string]bool{"article_id": true}
-	qp.Conditions = map[string]string{"article_id": mysql.CondEqual}
+	if articleId > -1 {
+		qp.ParamsStructPtr = &entity.RemarkEntity{ArticleId: articleId}
+		qp.Required = map[string]bool{"article_id": true}
+		qp.Conditions = map[string]string{"article_id": mysql.CondEqual}
+	}
 
 	return qp, nil
 }
@@ -66,18 +68,8 @@ func (rc *RemarkController) renderDescribeRemarks(remarkSvc *remark.Svc, remarks
 		idRemarkMap[remarkEntity.Id] = remarkEntity
 
 		if remarkEntity.InitRemarkId != -1 {
-			//if _, ok := idReplyIdsMap[remarkEntity.InitRemarkId]; ok {
-				idReplyIdsMap[remarkEntity.InitRemarkId] = append([]int64{remarkEntity.Id}, idReplyIdsMap[remarkEntity.InitRemarkId]...)
-			//} else {
-			//	idReplyIdsMap[remarkEntity.InitRemarkId] =
-			//}
+			idReplyIdsMap[remarkEntity.InitRemarkId] = append([]int64{remarkEntity.Id}, idReplyIdsMap[remarkEntity.InitRemarkId]...)
 		}
-
-
-		//remarkSet = append(remarkSet, &entity.RemarkResultEntity{
-		//	Remark:   remarkEntity,
-		//	ReplySet: replies,
-		//})
 	}
 
 	var remarkSet []*entity.RemarkResultEntity

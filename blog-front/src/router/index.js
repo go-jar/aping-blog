@@ -18,6 +18,7 @@ export const constantRouterMap = [
 	{ path: '/tag', component: () => import('@/pages/ListArticlesByTag') },
 	{ path: '/articles', component: () => import('@/pages/ListArticlesByKeyword') },
 	{ path: '/remark', component: () => import('@/pages/ManageRemark') },
+	{ path: '/list-remarks', component: () => import('@/pages/ListRemarks') },
 ]
 
 const router = new Router({

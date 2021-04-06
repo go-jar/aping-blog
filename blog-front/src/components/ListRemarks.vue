@@ -3,13 +3,6 @@
 <div>
     <div class="container">
         <div class="content">
-            <div style="text-align: center;">
-                <a :href="'#/article?id='+article.ArticleId">{{article.Title}}</a>
-            </div>
-            <div class="filter-container" style="margin: 3px 0 10px 6px; text-alegn: center;">
-                <el-button class="filter-item" type="primary" @click="handleCreateRemark" icon="el-icon-edit">评论</el-button>
-            </div>
-
             <!-- 列出类评论-->
             <el-row>
                 <el-col
@@ -17,7 +10,7 @@
                     :key="item.Remark.RemarkId"
                     style="padding: 3px"
                 >
-
+          
                     <el-card class="back"
                          :body-style="{height: '50px', padding: '0px', textAlign: 'center'}"
                          style="position: relative"
@@ -29,6 +22,7 @@
                                 {{formatTime(item.Remark.CreatedTime)}}&#12288;
                                 {{item.Remark.Nickname}}&#12288;
                                 {{item.Remark.Content}}&#12288;
+                                <a :href="'#/article?id='+item.Remark.ArticleId">文章</a>
                                 <a :href="'#'" @click="handleReplyRemark(item.Remark)">回复</a>
                                 <el-link
                                     type="danger"
@@ -261,22 +255,6 @@ export default {
             }
             this.changeCount = this.changeCount + 1;
         },
-        handleCreateRemark: function() {
-            this.title = "创建评论"
-            let that = this;
-            that.dialogVisible = true;
-
-            if (that.remark != null && that.remark.Content != null && that.remark.Content != "") {
-                if (that.remark.RemarkId) {
-                    that.isUpdateRemark = true;
-                } else {
-                    that.isUpdateRemark = false;
-                }
-            } else {
-                that.remark = this.getInitRemarkObject();
-                that.isUpdateRemark = false;
-            }
-        },
         getInitRemarkObject: function() {
             var remarkObject = {
                 RemarkId: null,
@@ -340,7 +318,7 @@ export default {
         },
         handleListRemarks: function() {
             var offset = (this.currentPage - 1) * this.pageSize;
-            describeRemarks(this.articleId, offset, this.pageSize).then(response => {
+            describeRemarks(null, offset, this.pageSize).then(response => {
                 if(response.Code == Code.SUCCESS) {
                     this.remarkSet = response.Data.RemarkSet;
                     this.total = response.Data.Total;

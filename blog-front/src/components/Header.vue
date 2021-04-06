@@ -15,6 +15,7 @@
 							<template slot="title" class="el-icon-s-tools"> 管理</template>
 							<el-menu-item index="/manage-cagegory">类别</el-menu-item>
 							<el-menu-item index="/manage-tag">标签</el-menu-item>
+							<el-menu-item index="/list-remarks">评论</el-menu-item>
 						</el-submenu>
 						<div class="createArticle">
 							<el-menu-item v-show="adminLogin" index="/create-article" class="el-icon-edit"><i class="fa fa-fw fa-user-circle userImg"></i> 创作</el-menu-item>
